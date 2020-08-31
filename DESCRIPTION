@@ -7,7 +7,7 @@ Authors@R:
            role = c("aut", "cre"),
            email = "jincio@gmail.com",
            comment = c(ORCID = "0000-0001-6866-0644"))
-Description: Paquete para analizar la información de COVID generada por MINSA.\Todos los datos se extraen de los repositorios de Datos Abiertos. 
+Description: Paquete para analizar la información de COVID generada por MINSA.Todos los datos se extraen de los repositorios de Datos Abiertos. 
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
