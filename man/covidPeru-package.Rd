@@ -6,7 +6,15 @@
 \alias{covidPeru-package}
 \title{covidPeru: Funciones para procesar información sobre COVID-19 en Perú}
 \description{
-Paquete para analizar la información de COVID generada por MINSA.\Todos los datos se extraen de los repositorios de Datos Abiertos.
+Paquete para analizar la información de COVID generada por MINSA.
+}
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://github.com/jincio/covidPeru}
+  \item Report bugs at \url{https://github.com/jincio/covidPeru/issues}
+}
+
 }
 \author{
 \strong{Maintainer}: José Incio \email{jincio@gmail.com} (\href{https://orcid.org/0000-0001-6866-0644}{ORCID})
