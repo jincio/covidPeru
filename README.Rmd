@@ -1,0 +1,112 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+
+# covidPeru
+
+<!-- badges: start -->
+<!-- badges: end -->
+
+El objetivo de este paquete es facilitar el uso de la información que tenemos disponible en el portal de datos abiertos del gobierno sobre COVID. 
+
+Empezó como algo de uso personal que espero sirva para tomadores de decisiones, periodistas, o cualquier persona que quiera trabajar con datos sobre COVID.
+
+## Installation
+
+Puedes instalar el paquete desde este 
+
+``` r
+install.packages("devtools")
+devtools::install_github("jincio/covidPeru")
+```
+
+## Ejemplo
+
+Primero tenemos que llamar los data frames y luego podemos proceder con la limpieza y generar unos gráficos. 
+
+```{r example}
+library(dplyr) ## Necesario!
+library(readr) ## Necesario!
+library(ggplot2) ## Necesario!
+library(covidPeru) 
+## basic example code
+```
+
+```{r}
+load("test.RData")
+```
+
+Cargamos el último set disponible en el portal de datos abiertos de pruebas analizadas con resultado positivo. 
+
+```{r positivos, eval=FALSE}
+positivos=da_positivos() # Crea un dataframe con la información positivos
+```
+
+```{r positivos2}
+head(positivos)
+```
+
+Cargamos el último set disponible en el portal de datos abiertos de fallecidos por COVID-19.
+
+```{r fallecidos1, eval=FALSE}
+fallecidos=da_fallecidos() # Crea un dataframe con la información de fallecidos.
+```
+
+```{r fallecidos2}
+head(fallecidos)
+```
+
+Cargamos el último set de SINADEF disponible en el portal de datos abiertos. Este demora un poco más, tengan paciencia!. 
+
+```{r sinadef1, eval=FALSE}
+sinadef=da_sinadef()
+```
+
+```{r sindadef2}
+head(sinadef)
+```
+
+Una vez con las bases podemos usar las otras funciones para generar series diarias y algunos gráficos de estas series. 
+
+Las funcion entrega una lista con dos objetos: una data y un gráfico. 
+
+```{r}
+fdiarios=fallecidos_diarios(fallecidos)[[1]]
+head(fdiarios)
+```
+
+```{r}
+grafico=fallecidos_diarios(fallecidos)[[2]]
+print(grafico)
+```
+
+Podemos identificar un departamento en específico. 
+
+```{r}
+fdiarios=fallecidos_diarios(fallecidos, "lima")[[1]]
+head(fdiarios)
+```
+
+```{r}
+grafico=fallecidos_diarios(fallecidos, "lima")[[2]]
+print(grafico)
+```
+
+- Podemos agregar una media móvil también. 
+
+```{r, message=FALSE}
+grafico=fallecidos_diarios(fallecidos, "lima",mediamovil = 7)[[2]]
+print(grafico)
+```
+
