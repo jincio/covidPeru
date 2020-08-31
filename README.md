@@ -45,10 +45,6 @@ library(covidPeru)
 ## basic example code
 ```
 
-``` r
-load("test.RData")
-```
-
 Cargamos el último set disponible en el portal de datos abiertos de
 pruebas analizadas con resultado positivo.
 

@@ -43,7 +43,7 @@ library(covidPeru)
 ## basic example code
 ```
 
-```{r}
+```{r, echo=FALSE}
 load("test.RData")
 ```
 
