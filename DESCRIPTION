@@ -17,3 +17,5 @@ Imports:
     dplyr,
     lubridate,
     magrittr
+URL: https://github.com/jincio/covidPeru
+BugReports: https://github.com/jincio/covidPeru/issues
