@@ -74,8 +74,8 @@ exceso_muertes<-function(data,DEPARTAMENTO=NULL,metodo="M2020"){
         scale_x_continuous(breaks = seq(1,semana_tomada,2), labels = seq(1,semana_tomada,2))
       resultado=list(f_semana_dep1, grafico)
     }
-
-  } else{
+  }
+  else{
     DEPARTAMENTO=toupper(DEPARTAMENTO)
     titulo=paste0("Exceso de fallecidos por semana en ",DEPARTAMENTO)
     data=data
@@ -130,9 +130,7 @@ exceso_muertes<-function(data,DEPARTAMENTO=NULL,metodo="M2020"){
         labs(x = "N° semana",y = "Número de fallecidos",title = titulo)+
         scale_x_continuous(breaks = seq(1,semana_tomada,2), labels = seq(1,semana_tomada,2))
       resultado=list(f_semana_dep1, grafico)
-
     }
-    return(resultado)
+    #return(resultado)
   }
-  return(resultado)
-}
+  return(resultado)}
