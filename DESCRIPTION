@@ -19,3 +19,5 @@ Imports:
     magrittr
 URL: https://github.com/jincio/covidPeru
 BugReports: https://github.com/jincio/covidPeru/issues
+Suggests: 
+    ggplot2

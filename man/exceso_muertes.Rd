@@ -4,10 +4,10 @@
 \alias{exceso_muertes}
 \title{exceso_muertes}
 \usage{
-exceso_muertes(data, DEPARTAMENTO = NULL, metodo = "M2020")
+exceso_muertes(data, DEPARTAMENTO = NULL, metodo = TRUE)
 }
 \arguments{
-\item{metodo}{default="Mactual". Mactual considera el promedio de las primeras 11 semanas del 2020. "Mhistorico" compara la semana del 2020 con las el promedio de fallecidos en la misma semana en en el 2017, 2018,2019.}
+\item{metodo}{Default M2020}
 }
 \value{
 
