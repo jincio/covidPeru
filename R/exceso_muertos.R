@@ -2,7 +2,7 @@
 #'
 #' @param data
 #' @param DEPARTAMENTO
-#' @param metodo default="Mactual". Mactual considera el promedio de las primeras 11 semanas del 2020. "Mhistorico" compara la semana del 2020 con las el promedio de fallecidos en la misma semana en en el 2017, 2018,2019.
+#' @param metodo default="M2020". Mactual considera el promedio de las primeras 11 semanas del 2020. "Mhistorico" compara la semana del 2020 con las el promedio de fallecidos en la misma semana en en el 2017, 2018,2019.
 #'
 #' @return
 #' @export
@@ -17,9 +17,10 @@ exceso_muertes<-function(data,DEPARTAMENTO=NULL,metodo="M2020"){
     data=data
     ult_semana=lubridate::epiweek(max(data$fecha))
     ult_dia=weekdays(max(data$fecha))
+    actualizacion=lubridate::date(max(data$fecha))
     semana_tomada=ifelse(ult_dia=="Saturday",ult_semana,ult_semana-1)
-    cat("Ojo: archivo actualizado al",lubridate::date(max(sinadef$fecha)),
-      "tomamos referencia hasta la semana",semana_tomada)
+    print(paste0("Ojo: archivo actualizado al ",actualizacion,
+      " tomamos referencia hasta la semana ",semana_tomada))
     if (metodo == "M2020")
     {
       f_semana_depa=data%>%
@@ -81,9 +82,10 @@ exceso_muertes<-function(data,DEPARTAMENTO=NULL,metodo="M2020"){
     departamento_select=DEPARTAMENTO
     ult_semana=lubridate::epiweek(max(data$fecha))
     ult_dia=weekdays(max(data$fecha))
+    actualizacion=lubridate::date(max(data$fecha))
     semana_tomada=ifelse(ult_dia=="Saturday",ult_semana,ult_semana-1)
-    cat("Ojo: archivo actualizado al",max(sinadef$fecha),
-      "tomamos referencia hasta la semana",semana_tomada)
+    print(paste0("Ojo: archivo actualizado al ",actualizacion,
+                 " tomamos referencia hasta la semana ",semana_tomada))
     if (metodo == "Mactual")
     {
       f_semana_depa=data%>%filter(`DEPARTAMENTO DOMICILIO`==departamento_select)%>%
