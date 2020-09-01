@@ -51,26 +51,23 @@ da_fallecidos<-function (){
 da_sinadef<-function (){
   file="https://cloud.minsa.gob.pe/s/nqF2irNbFomCLaa/download"
   data<- readr::read_csv2(file, progress = TRUE,col_names = FALSE,
-                    locale(encoding = "latin1"),
-                    col_types = NULL)
-  print("si lees esto es que el archivo bajo bien :)")
-  print("limpiando el archivo")
+                          locale(encoding = "latin1"),
+                          col_types = NULL)
+  cat("si lees esto es que el archivo bajo bien :)")
+  cat("...limpiando el archivo")
   espacio_columna <- which(data[,1]=="Nº")[1]
   col_names <- data[espacio_columna,]
   colnames(data) <- col_names
   colnames(data)[14] <-"Year"
   inicio <- espacio_columna+1
-  print("Eliminamos informacion vacia")
+  cat("...Eliminamos informacion vacia")
   data1 <- data[inicio:nrow(data),]
   data1 <- data1[,colSums(is.na(data1))<nrow(data1)]
-  print("Creando variables standards")
+  cat("...Creando variables standards")
   data1 <- data1 %>% filter(`DEPARTAMENTO DOMICILIO` != "EXTRANJERO",
-                                           `MUERTE VIOLENTA` %in% c("SIN REGISTRO","NO SE CONOCE")) %>%
-    mutate(fecha = as.Date(FECHA), dia = lubridate::yday(fecha), mes = as.numeric(MES),
-           year = as.numeric(Year)) %>%
-    select(fecha,dia,mes,year,`DEPARTAMENTO DOMICILIO`,`PROVINCIA DOMICILIO`) %>%
-    group_by(fecha, `DEPARTAMENTO DOMICILIO`,`PROVINCIA DOMICILIO`) %>%
-    summarize(dia = mean(dia), mes = mean(mes), anho = mean(year),cont = n())
-
+                            `MUERTE VIOLENTA` %in% c("SIN REGISTRO","NO SE CONOCE")) %>%
+    mutate(fecha = as.Date(FECHA),semana = lubridate::epiweek(fecha), mes = as.numeric(MES),
+           year = as.numeric(Year),dia = weekdays(fecha)) %>%
+    select(fecha,semana,year,dia,`DEPARTAMENTO DOMICILIO`,`PROVINCIA DOMICILIO`)
   return(data1)
 }
