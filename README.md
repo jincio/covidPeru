@@ -41,9 +41,24 @@ library(dplyr) ## Necesario!
 #>     intersect, setdiff, setequal, union
 library(readr) ## Necesario!
 library(ggplot2) ## Necesario!
+library(lubridate)
+#> Warning: package 'lubridate' was built under R version 4.0.2
+#> 
+#> Attaching package: 'lubridate'
+#> The following objects are masked from 'package:dplyr':
+#> 
+#>     intersect, setdiff, union
+#> The following objects are masked from 'package:base':
+#> 
+#>     date, intersect, setdiff, union
 library(covidPeru) 
-## basic example code
 ```
+
+``` r
+library(covidPeru)
+```
+
+    #> Loading covidPeru
 
 Cargamos el último set disponible en el portal de datos abiertos de
 pruebas analizadas con resultado positivo.
@@ -171,3 +186,32 @@ print(grafico)
 ```
 
 <img src="man/figures/README-unnamed-chunk-7-1.png" width="100%" />
+
+### Exceso de muertos
+
+En el paquete también está disponible la función para calcular el exceso
+de muertos en Perú y por departamentos por semana.
+
+En este caso la información se calcula por semana. Hayd dos “métodos”.
+Tomando como referencia las primeras 11 semanas del 2020 (“M2020”), y el
+“Mhistorico” que usa el promedio de muertos de los años 2017,2018, 2019
+con la semana de comparación.
+
+``` r
+exceso_lima=exceso_muertes(sinadef,"Lima")[1]
+```
+
+``` r
+head(exceso_lima)
+```
+
+``` r
+exceso_lima_grafico=exceso_muertes(sinadef,"Lima")[2]
+print(exceso_lima_grafico)
+```
+
+``` r
+exceso_Peru_historico=exceso_muertes(sinadef,"Mhistorico")[1]
+grafico_Peru_historico=exceso_muertes(sinadef,"Mhistorico")[1]
+print(grafico_Peru_historico)
+```
