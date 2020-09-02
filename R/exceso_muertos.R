@@ -52,7 +52,7 @@ exceso_muertes<-function(data,DEPARTAMENTO=NULL,metodo=TRUE){
         dplyr::select("semana","year")%>%
         group_by(semana, year)%>%
         summarize(numero_fallecidos=n()) %>% arrange(year)
-      f_semana_dep1 <- spread(f_semana_depa,year,numero_fallecidos)
+      f_semana_dep1 <- tidyr::spread(f_semana_depa,year,numero_fallecidos)
       row_mean = rowMeans(f_semana_dep1[,c("2017","2018","2019")])
       row_mean = round(row_mean,0)
 

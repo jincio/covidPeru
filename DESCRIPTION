@@ -13,11 +13,11 @@ Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1
-Imports: 
-    dplyr,
-    lubridate,
-    magrittr
 URL: https://github.com/jincio/covidPeru
 BugReports: https://github.com/jincio/covidPeru/issues
 Suggests: 
-    ggplot2
+    ggplot2,
+    dplyr,
+    readr,
+    magrittr,
+    lubridate

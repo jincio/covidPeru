@@ -392,7 +392,7 @@ casos_crecimiento<-function(data,DEPARTAMENTO=NULL, mediamovil = NA){
     }
   } else{
     DEPARTAMENTO=toupper(DEPARTAMENTO)
-    titulo=paste0("Variacion % de Casos por dia en",DEPARTAMENTO)
+    titulo=paste0("Variacion % de Casos por dia en ",DEPARTAMENTO)
     data=data
     departamento_select=DEPARTAMENTO
     if(is.na(mediamovil)){
