@@ -41,7 +41,7 @@ library(dplyr) ## Necesario!
 #>     intersect, setdiff, setequal, union
 library(readr) ## Necesario!
 library(ggplot2) ## Necesario!
-library(lubridate)
+library(lubridate)## Necesario!
 #> Warning: package 'lubridate' was built under R version 4.0.2
 #> 
 #> Attaching package: 'lubridate'
@@ -113,16 +113,15 @@ sinadef=da_sinadef()
 
 ``` r
 head(sinadef)
-#> # A tibble: 6 x 7
-#> # Groups:   fecha, DEPARTAMENTO DOMICILIO [2]
-#>   fecha      `DEPARTAMENTO DOMICILI… `PROVINCIA DOMICIL…   dia   mes  anho  cont
-#>   <date>     <chr>                   <chr>               <dbl> <dbl> <dbl> <int>
-#> 1 2017-01-01 AMAZONAS                BONGARA                 1     1  2017     1
-#> 2 2017-01-01 AMAZONAS                CHACHAPOYAS             1     1  2017     1
-#> 3 2017-01-01 ANCASH                  AIJA                    1     1  2017     1
-#> 4 2017-01-01 ANCASH                  CARHUAZ                 1     1  2017     1
-#> 5 2017-01-01 ANCASH                  HUARAZ                  1     1  2017     3
-#> 6 2017-01-01 ANCASH                  OCROS                   1     1  2017     1
+#> # A tibble: 6 x 6
+#>   fecha      semana  year dia      `DEPARTAMENTO DOMICILIO` `PROVINCIA DOMICILI…
+#>   <date>      <dbl> <dbl> <chr>    <chr>                    <chr>               
+#> 1 2020-01-24      4  2020 Friday   CUSCO                    CUSCO               
+#> 2 2020-01-30      5  2020 Thursday CALLAO                   CALLAO              
+#> 3 2020-01-19      4  2020 Sunday   CAJAMARCA                CAJAMARCA           
+#> 4 2020-01-13      3  2020 Monday   LA LIBERTAD              TRUJILLO            
+#> 5 2020-01-25      4  2020 Saturday CAJAMARCA                CAJAMARCA           
+#> 6 2020-01-12      3  2020 Sunday   JUNIN                    YAULI
 ```
 
 Una vez con las bases podemos usar las otras funciones para generar
@@ -192,26 +191,53 @@ print(grafico)
 En el paquete también está disponible la función para calcular el exceso
 de muertos en Perú y por departamentos por semana.
 
-En este caso la información se calcula por semana. Hayd dos “métodos”.
-Tomando como referencia las primeras 11 semanas del 2020 (“M2020”), y el
-“Mhistorico” que usa el promedio de muertos de los años 2017,2018, 2019
-con la semana de comparación.
+En este caso la información se calcula por semana. Hay dos “métodos”
+disponibles. El método por default toma como referencia las primeras 11
+semanas del 2020 (“M2020”), y el “alternativo” que usa el promedio de
+muertos de los años 2017,2018, 2019 con la semana de comparación.
 
 ``` r
-exceso_lima=exceso_muertes(sinadef,"Lima")[1]
+base=exceso_muertes(sinadef)[1]
+#> [1] "Ojo: archivo actualizado al 2020-08-31 tomamos referencia hasta la semana 35"
+head(base, 30)
+#> [[1]]
+#> # A tibble: 35 x 5
+#>    semana  year numero_fallecidos Esperado Exceso
+#>     <dbl> <dbl>             <int>    <dbl>  <dbl>
+#>  1      1  2020              1224     1224      0
+#>  2      2  2020              2167     2167      0
+#>  3      3  2020              2120     2120      0
+#>  4      4  2020              2107     2107      0
+#>  5      5  2020              1995     1995      0
+#>  6      6  2020              2120     2120      0
+#>  7      7  2020              2099     2099      0
+#>  8      8  2020              2084     2084      0
+#>  9      9  2020              2190     2190      0
+#> 10     10  2020              2178     2178      0
+#> # … with 25 more rows
 ```
 
 ``` r
-head(exceso_lima)
+grafico=exceso_muertes(sinadef)[2]
+print(grafico)
 ```
 
 ``` r
-exceso_lima_grafico=exceso_muertes(sinadef,"Lima")[2]
-print(exceso_lima_grafico)
+grafico=exceso_muertes(sinadef,metodo = FALSE)[2]
+#> [1] "Ojo: archivo actualizado al 2020-08-31 tomamos referencia hasta la semana 35"
+print(grafico)
+#> [[1]]
 ```
 
+<img src="man/figures/README-unnamed-chunk-10-1.png" width="100%" />
+
+**Lima**
+
 ``` r
-exceso_Peru_historico=exceso_muertes(sinadef,"Mhistorico")[1]
-grafico_Peru_historico=exceso_muertes(sinadef,"Mhistorico")[1]
-print(grafico_Peru_historico)
+Lima=exceso_muertes(sinadef,"Lima")[2]
+#> [1] "Ojo: archivo actualizado al 2020-08-31 tomamos referencia hasta la semana 35"
+print(Lima)
+#> [[1]]
 ```
+
+<img src="man/figures/README-unnamed-chunk-11-1.png" width="100%" />

@@ -39,7 +39,7 @@ Primero tenemos que llamar los data frames y luego podemos proceder con la limpi
 library(dplyr) ## Necesario!
 library(readr) ## Necesario!
 library(ggplot2) ## Necesario!
-library(lubridate)
+library(lubridate)## Necesario!
 library(covidPeru) 
 ```
 
@@ -122,24 +122,28 @@ print(grafico)
 
 En el paquete también está disponible la función para calcular el exceso de muertos en Perú y por departamentos por semana. 
 
-En este caso la información se calcula por semana. Hayd dos "métodos". Tomando como referencia las primeras 11 semanas del 2020 ("M2020"), y el "Mhistorico" que usa el promedio de muertos de los años 2017,2018, 2019 con la semana de comparación.
+En este caso la información se calcula por semana. Hay dos "métodos" disponibles. El método por default toma como referencia las primeras 11 semanas del 2020 ("M2020"), y el "alternativo" que usa el promedio de muertos de los años 2017,2018, 2019 con la semana de comparación.
 
-```{r, eval=FALSE}
-exceso_lima=exceso_muertes(sinadef,"Lima")[1]
+```{r}
+base=exceso_muertes(sinadef)[1]
+head(base, 30)
 ```
 
 ```{r, eval=FALSE}
-head(exceso_lima)
+grafico=exceso_muertes(sinadef)[2]
+print(grafico)
 ```
 
-```{r, eval=FALSE}
-exceso_lima_grafico=exceso_muertes(sinadef,"Lima")[2]
-print(exceso_lima_grafico)
+```{r}
+grafico=exceso_muertes(sinadef,metodo = FALSE)[2]
+print(grafico)
 ```
 
-```{r, eval=FALSE}
-exceso_Peru_historico=exceso_muertes(sinadef,"Mhistorico")[1]
-grafico_Peru_historico=exceso_muertes(sinadef,"Mhistorico")[1]
-print(grafico_Peru_historico)
+**Lima** 
+
+```{r,}
+Lima=exceso_muertes(sinadef,"Lima")[2]
+print(Lima)
 ```
+
 
