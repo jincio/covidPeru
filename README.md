@@ -31,26 +31,9 @@ la limpieza y generar unos gráficos.
 
 ``` r
 library(dplyr) ## Necesario!
-#> 
-#> Attaching package: 'dplyr'
-#> The following objects are masked from 'package:stats':
-#> 
-#>     filter, lag
-#> The following objects are masked from 'package:base':
-#> 
-#>     intersect, setdiff, setequal, union
 library(readr) ## Necesario!
 library(ggplot2) ## Necesario!
 library(lubridate)## Necesario!
-#> Warning: package 'lubridate' was built under R version 4.0.2
-#> 
-#> Attaching package: 'lubridate'
-#> The following objects are masked from 'package:dplyr':
-#> 
-#>     intersect, setdiff, union
-#> The following objects are masked from 'package:base':
-#> 
-#>     date, intersect, setdiff, union
 library(covidPeru) 
 ```
 
@@ -199,7 +182,7 @@ muertos de los años 2017,2018, 2019 con la semana de comparación.
 ``` r
 base=exceso_muertes(sinadef)[1]
 #> [1] "Ojo: archivo actualizado al 2020-08-31 tomamos referencia hasta la semana 35"
-head(base, 30)
+head(base,30)
 #> [[1]]
 #> # A tibble: 35 x 5
 #>    semana  year numero_fallecidos Esperado Exceso
@@ -219,8 +202,12 @@ head(base, 30)
 
 ``` r
 grafico=exceso_muertes(sinadef)[2]
+#> [1] "Ojo: archivo actualizado al 2020-08-31 tomamos referencia hasta la semana 35"
 print(grafico)
+#> [[1]]
 ```
+
+<img src="man/figures/README-exceso2020-1.png" width="100%" />
 
 ``` r
 grafico=exceso_muertes(sinadef,metodo = FALSE)[2]
@@ -229,7 +216,7 @@ print(grafico)
 #> [[1]]
 ```
 
-<img src="man/figures/README-unnamed-chunk-10-1.png" width="100%" />
+<img src="man/figures/README-excesohis-1.png" width="100%" />
 
 **Lima**
 
@@ -240,4 +227,4 @@ print(Lima)
 #> [[1]]
 ```
 
-<img src="man/figures/README-unnamed-chunk-11-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-9-1.png" width="100%" />

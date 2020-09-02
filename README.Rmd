@@ -35,7 +35,7 @@ devtools::install_github("jincio/covidPeru")
 
 Primero tenemos que llamar los data frames y luego podemos proceder con la limpieza y generar unos gráficos. 
 
-```{r paquetes}
+```{r paquetes, message=FALSE, warning=FALSE}
 library(dplyr) ## Necesario!
 library(readr) ## Necesario!
 library(ggplot2) ## Necesario!
@@ -126,15 +126,15 @@ En este caso la información se calcula por semana. Hay dos "métodos" disponibl
 
 ```{r}
 base=exceso_muertes(sinadef)[1]
-head(base, 30)
+head(base,30)
 ```
 
-```{r, eval=FALSE}
+```{r exceso2020}
 grafico=exceso_muertes(sinadef)[2]
 print(grafico)
 ```
 
-```{r}
+```{r excesohis}
 grafico=exceso_muertes(sinadef,metodo = FALSE)[2]
 print(grafico)
 ```
