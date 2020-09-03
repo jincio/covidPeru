@@ -20,4 +20,6 @@ Suggests:
     dplyr,
     readr,
     magrittr,
-    lubridate
+    lubridate,
+    purrr,
+    tidyr
