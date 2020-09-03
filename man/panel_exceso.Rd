@@ -13,5 +13,5 @@ panel_exceso(data)
 a ggplot object
 }
 \description{
-\code{panel_exceso} es una funcion creada por Gabriel Carrasco
+\code{panel_exceso} es una funcion creada por Gabriel Carrasco (twitter:Gabc91)
 }

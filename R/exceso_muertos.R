@@ -2,7 +2,7 @@
 #'
 #' @param data
 #' @param DEPARTAMENTO
-#' @param metodo Default M2020
+#' @param metodo Default=TRUE. El default toma las 11 primeras semanas del 2020. Alternativo toma años anteriores.
 #'
 #' @return
 #' @export
@@ -21,7 +21,7 @@ exceso_muertes<-function(data,DEPARTAMENTO=NULL,metodo=TRUE){
     actualizacion=lubridate::date(max(data$fecha))
     semana_tomada=ifelse(ult_dia=="Saturday",ult_semana,ult_semana-1)
     print(paste0("Ojo: archivo actualizado al ",actualizacion,
-                 " tomamos referencia hasta la semana ",semana_tomada))
+      " tomamos referencia hasta la semana ",semana_tomada))
     if (isTRUE(metodo))
     {
       f_semana_depa=data%>%
@@ -34,17 +34,18 @@ exceso_muertes<-function(data,DEPARTAMENTO=NULL,metodo=TRUE){
                                numero_fallecidos)) %>%
         dplyr::mutate(Exceso = ifelse(numero_fallecidos-Esperado<0,0,
                                       numero_fallecidos-Esperado))%>%
-        filter(semana<=semana_tomada)
+        filter(semana<=semana_tomada)  %>%
+        mutate(fecha_ultima = MMWRweek::MMWRweek2Date(year,semana,07))
 
       grafico <- f_semana_depa %>%
-        ggplot2::ggplot() +
-        ggplot2::geom_line(aes(x = as.numeric(semana), y = Esperado,colour = "Esperado"),size = 1.2)+
-        ggplot2::geom_line(aes(x = as.numeric(semana), y = numero_fallecidos,colour = "Observado"),size = 1.2)+
-        theme(legend.position = "bottom")+
+      ggplot2::ggplot() +
+      ggplot2::geom_line(aes(x =fecha_ultima , y = Esperado,colour = "Esperado"),size = 1.2)+
+      ggplot2::geom_line(aes(x =fecha_ultima, y = numero_fallecidos,colour = "Observado"),size = 1.2)+
+        theme(legend.position = "bottom",axis.text.x=element_text(angle=90, hjust=1))+
         scale_color_manual("Leyenda",values = c("Esperado" = "#386cb0","Observado" ="red3"))+
-        labs(x = "N° semana",y = "Número de fallecidos",title = titulo,
+        labs(x = "Mes",y = "Número de fallecidos",title = titulo,
              caption = "Metodo 2020")+
-        scale_x_continuous(breaks = seq(1,semana_tomada,2), labels = seq(1,semana_tomada,2))
+        scale_x_date(date_breaks = "1 month", date_labels =  "%b %Y")
       resultado=list(f_semana_depa, grafico)
     }
     else if (isFALSE(metodo)){
@@ -58,16 +59,18 @@ exceso_muertes<-function(data,DEPARTAMENTO=NULL,metodo=TRUE){
 
       f_semana_dep1$esperado = row_mean
       f_semana_dep1 <- f_semana_dep1[!is.na(f_semana_dep1$`2020`),]
-      f_semana_dep1=f_semana_dep1%>%filter(semana<=semana_tomada)
+      f_semana_dep1=f_semana_dep1%>%filter(semana<=semana_tomada) %>%
+        mutate(fecha_ultima = MMWRweek::MMWRweek2Date(2020,semana,07))
+      
 
       grafico <- f_semana_dep1 %>% ggplot2::ggplot() +
-        geom_line(aes(x = as.numeric(semana), y = esperado,colour = "Esperado"),size = 1.2)+
-        geom_line(aes(x = as.numeric(semana), y = `2020`,colour = "Observado"),size = 1.2)+
-        theme(legend.position = "bottom")+
+        geom_line(aes(x = fecha_ultima, y = esperado,colour = "Esperado"),size = 1.2)+
+        geom_line(aes(x = fecha_ultima, y = `2020`,colour = "Observado"),size = 1.2)+
+        theme(legend.position = "bottom",axis.text.x=element_text(angle=90, hjust=1))+
         scale_color_manual("Leyenda",values = c("Esperado" = "#386cb0","Observado" ="red3"))+
-        labs(x = "N° semana",y = "Número de fallecidos",title = titulo,
+        labs(x = "Mes",y = "Número de fallecidos",title = titulo,
              caption = "Metodo historico")+
-        scale_x_continuous(breaks = seq(1,semana_tomada,2), labels = seq(1,semana_tomada,2))
+        scale_x_date(date_breaks = "1 month", date_labels =  "%b %Y")
       resultado=list(f_semana_dep1, grafico)
     }
   }
@@ -93,15 +96,19 @@ exceso_muertes<-function(data,DEPARTAMENTO=NULL,metodo=TRUE){
                                numero_fallecidos)) %>%
         dplyr::mutate(Exceso = ifelse(numero_fallecidos-Esperado<0,0,
                                       numero_fallecidos-Esperado))%>%
-        filter(semana<=semana_tomada)
+        filter(semana<=semana_tomada) %>%
+        mutate(fecha_ultima = MMWRweek::MMWRweek2Date(year,semana,07))
+        #MMWRweek::MMWRweek2Date(year,semana,07)
 
       grafico <- f_semana_depa %>% ggplot2::ggplot() +
-        geom_line(aes(x = as.numeric(semana), y = Esperado,colour = "Esperado"),size = 1.2)+
-        geom_line(aes(x = as.numeric(semana), y = numero_fallecidos,colour = "Observado"),size = 1.2)+
-        theme(legend.position = "bottom")+
+        geom_line(aes(x = fecha_ultima, y = Esperado,colour = "Esperado"),size = 1.2)+
+        geom_line(aes(x = fecha_ultima, y = numero_fallecidos,colour = "Observado"),size = 1.2)+
+        theme(legend.position = "bottom",axis.text.x=element_text(angle=90, hjust=1))+
         scale_color_manual("Leyenda",values = c("Esperado" = "#386cb0","Observado" ="red3"))+
-        scale_x_continuous(breaks = seq(1,semana_tomada,2), labels = seq(1,semana_tomada,2))+
-        labs(y="Fallecidos semanales",title = titulo, caption = "Metodo 2020")
+        labs(y="Fallecidos semanales",title = titulo, caption = "Metodo 2020",
+             x = "Mes")+
+        scale_x_date(date_breaks = "1 month", date_labels =  "%b %Y")
+        
       resultado=list(f_semana_depa, grafico)
       #return(f_dia_depa)
     }
@@ -110,24 +117,25 @@ exceso_muertes<-function(data,DEPARTAMENTO=NULL,metodo=TRUE){
         dplyr::select("semana","year")%>%
         group_by(semana, year)%>%
         summarize(numero_fallecidos=n()) %>% arrange(year)
-      f_semana_dep1 <- spread(f_semana_depa,year,numero_fallecidos)
+      f_semana_dep1 <- tidyr::spread(f_semana_depa,year,numero_fallecidos)
       row_mean = rowMeans(f_semana_dep1[,c("2017","2018","2019")])
       row_mean = round(row_mean,0)
 
       f_semana_dep1$esperado = row_mean
       f_semana_dep1 <- f_semana_dep1[!is.na(f_semana_dep1$`2020`),]
-      f_semana_dep1=f_semana_dep1%>%filter(semana<=semana_tomada)
-
+      f_semana_dep1=f_semana_dep1%>%filter(semana<=semana_tomada)%>%
+        mutate(fecha_ultima = MMWRweek::MMWRweek2Date(2020,semana,07))
+      
       grafico <- f_semana_dep1 %>%ggplot2::ggplot() +
-        geom_line(aes(x = as.numeric(semana), y = esperado,colour = "Esperado"),size = 1.2)+
-        geom_line(aes(x = as.numeric(semana), y = `2020`,colour = "Observado"),size = 1.2)+
-        theme(legend.position = "bottom")+
+        geom_line(aes(x = fecha_ultima, y = esperado,colour = "Esperado"),size = 1.2)+
+        geom_line(aes(x = fecha_ultima, y = `2020`,colour = "Observado"),size = 1.2)+
+        theme(legend.position = "bottom",axis.text.x=element_text(angle=90, hjust=1))+
         scale_color_manual("Leyenda",values = c("Esperado" = "#386cb0","Observado" ="red3"))+
-        labs(x = "N° semana",y = "Número de fallecidos",title = titulo,
+        labs(x = "Mes",y = "Número de fallecidos",title = titulo,
              caption = "Metodo historico")+
-        scale_x_continuous(breaks = seq(1,semana_tomada,2), labels = seq(1,semana_tomada,2))
+        scale_x_date(date_breaks = "1 month", date_labels =  "%b %Y")
       resultado=list(f_semana_dep1, grafico)
     }
   }
   return(resultado)
-}
+  }

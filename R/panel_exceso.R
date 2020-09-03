@@ -1,6 +1,6 @@
 #' panel exceso
 #'
-#'\code{panel_exceso} es una funcion creada por Gabriel Carrasco
+#'\code{panel_exceso} es una funcion creada por Gabriel Carrasco (twitter:Gabc91)
 #' @param data a un data frame creado con da_sinadef()
 #'
 #' @return a ggplot object

@@ -7,7 +7,7 @@
 exceso_muertes(data, DEPARTAMENTO = NULL, metodo = TRUE)
 }
 \arguments{
-\item{metodo}{Default M2020}
+\item{metodo}{Default=TRUE. El default toma las 11 primeras semanas del 2020. Alternativo toma años anteriores.}
 }
 \value{
 
