@@ -34,6 +34,8 @@ library(dplyr) ## Necesario!
 library(readr) ## Necesario!
 library(ggplot2) ## Necesario!
 library(lubridate)## Necesario!
+library(purrr) ## Necesario
+library(MMWRweek) ## Necesario
 library(covidPeru) 
 ```
 
@@ -184,19 +186,19 @@ base=exceso_muertes(sinadef)[1]
 #> [1] "Ojo: archivo actualizado al 2020-08-31 tomamos referencia hasta la semana 35"
 head(base,30)
 #> [[1]]
-#> # A tibble: 35 x 5
-#>    semana  year numero_fallecidos Esperado Exceso
-#>     <dbl> <dbl>             <int>    <dbl>  <dbl>
-#>  1      1  2020              1224     1224      0
-#>  2      2  2020              2167     2167      0
-#>  3      3  2020              2120     2120      0
-#>  4      4  2020              2107     2107      0
-#>  5      5  2020              1995     1995      0
-#>  6      6  2020              2120     2120      0
-#>  7      7  2020              2099     2099      0
-#>  8      8  2020              2084     2084      0
-#>  9      9  2020              2190     2190      0
-#> 10     10  2020              2178     2178      0
+#> # A tibble: 35 x 6
+#>    semana  year numero_fallecidos Esperado Exceso fecha_ultima
+#>     <dbl> <dbl>             <int>    <dbl>  <dbl> <date>      
+#>  1      1  2020              1224     1224      0 2020-01-04  
+#>  2      2  2020              2167     2167      0 2020-01-11  
+#>  3      3  2020              2120     2120      0 2020-01-18  
+#>  4      4  2020              2107     2107      0 2020-01-25  
+#>  5      5  2020              1995     1995      0 2020-02-01  
+#>  6      6  2020              2120     2120      0 2020-02-08  
+#>  7      7  2020              2099     2099      0 2020-02-15  
+#>  8      8  2020              2084     2084      0 2020-02-22  
+#>  9      9  2020              2190     2190      0 2020-02-29  
+#> 10     10  2020              2178     2178      0 2020-03-07  
 #> # … with 25 more rows
 ```
 
@@ -228,3 +230,17 @@ print(Lima)
 ```
 
 <img src="man/figures/README-unnamed-chunk-9-1.png" width="100%" />
+
+\*\* Gabriel Carrasco-Escobar (Gabc91) preparó una función que hemos
+agregado al paquete. La función te da como resultado un gráfico a modo
+de panel de calor con el exceso de muertes para todas las regiones \*\*
+
+``` r
+grafico=panel_exceso(sinadef)
+```
+
+``` r
+print(grafico)
+```
+
+<img src="man/figures/README-unnamed-chunk-10-1.png" width="100%" />

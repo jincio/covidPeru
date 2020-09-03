@@ -40,6 +40,8 @@ library(dplyr) ## Necesario!
 library(readr) ## Necesario!
 library(ggplot2) ## Necesario!
 library(lubridate)## Necesario!
+library(purrr) ## Necesario
+library(MMWRweek) ## Necesario
 library(covidPeru) 
 ```
 
@@ -146,4 +148,17 @@ Lima=exceso_muertes(sinadef,"Lima")[2]
 print(Lima)
 ```
 
+** Gabriel Carrasco-Escobar (Gabc91) preparó una función que hemos agregado al paquete. La función te da como resultado un gráfico a modo de panel de calor con el exceso de muertes para todas las regiones **
+
+```{r panel_exceso, echo=FALSE,include=FALSE}
+grafico=panel_exceso(sinadef)
+```
+
+```{r panel_exceso2, eval=FALSE}
+grafico=panel_exceso(sinadef)
+```
+
+```{r}
+print(grafico)
+```
 
