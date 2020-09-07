@@ -4,7 +4,12 @@
 \alias{fallecidos_crecimiento}
 \title{Fallecidos_ratio}
 \usage{
-fallecidos_crecimiento(data, DEPARTAMENTO = NULL, mediamovil = NA)
+fallecidos_crecimiento(
+  data,
+  DEPARTAMENTO = NULL,
+  mediamovil = NA,
+  semanal = FALSE
+)
 }
 \arguments{
 \item{data}{Data frame creado con la función da_fallecidos()}
@@ -12,6 +17,8 @@ fallecidos_crecimiento(data, DEPARTAMENTO = NULL, mediamovil = NA)
 \item{DEPARTAMENTO}{Departamento del Perú. Callao está listado como departamento}
 
 \item{mediamovil}{Integer para calcular o graficar la media móvil. Eje: 1,2,3.}
+
+\item{semanal}{Boleano que permite obtener la información en frecuencia semanal}
 }
 \value{
 

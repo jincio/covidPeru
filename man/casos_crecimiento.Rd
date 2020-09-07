@@ -4,7 +4,7 @@
 \alias{casos_crecimiento}
 \title{Casos_crecimiento}
 \usage{
-casos_crecimiento(data, DEPARTAMENTO = NULL, mediamovil = NA)
+casos_crecimiento(data, DEPARTAMENTO = NULL, mediamovil = NA, semanal = FALSE)
 }
 \arguments{
 \item{data}{Data frame creado con la función da_positivos()}
@@ -12,6 +12,8 @@ casos_crecimiento(data, DEPARTAMENTO = NULL, mediamovil = NA)
 \item{DEPARTAMENTO}{Departamento del Perú. Callao está listado como departamento}
 
 \item{mediamovil}{Integer para calcular o graficar la media móvil. Eje: 1,2,3.}
+
+\item{semanal}{Boleano True permite obtener la informacion en frecuencia semanal}
 }
 \value{
 
