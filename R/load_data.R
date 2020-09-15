@@ -1,6 +1,8 @@
 #' load positive COVID cases
 #'
 #' Cargal la base de datos de casos confirmados desde la página de datos abiertos
+#' 
+#' @import readr
 #'
 #' @return data_frame
 #' @export
