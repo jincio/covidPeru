@@ -23,3 +23,5 @@ Suggests:
     lubridate,
     purrr,
     tidyr
+Depends: 
+    R (>= 2.10)
