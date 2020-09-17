@@ -57,13 +57,13 @@ head(positivos)
 #> # A tibble: 6 x 14
 #>   UUID  DEPARTAMENTO PROVINCIA DISTRITO METODODX  EDAD SEXO  FECHA_RESULTADO
 #>   <chr> <chr>        <chr>     <chr>    <chr>    <dbl> <chr>           <dbl>
-#> 1 7320… LIMA         LIMA      SAN BOR… PCR         34 FEME…        20200325
-#> 2 e816… LIMA         LIMA      SAN BOR… PCR         30 FEME…        20200406
-#> 3 71ec… LIMA         LIMA      SAN BOR… PCR         34 FEME…        20200410
-#> 4 566a… LIMA         LIMA      BREÑA    PCR         32 FEME…        20200403
-#> 5 0275… LIMA         LIMA      LIMA     PCR         31 FEME…        20200409
-#> 6 f016… LIMA         LIMA      LIMA     PCR         30 FEME…        20200409
-#> # … with 6 more variables: year <chr>, month <chr>, day <chr>, fecha <date>,
+#> 1 7320~ LIMA         LIMA      SAN BOR~ PCR         34 FEME~        20200325
+#> 2 e816~ LIMA         LIMA      SAN BOR~ PCR         30 FEME~        20200406
+#> 3 71ec~ LIMA         LIMA      SAN BOR~ PCR         34 FEME~        20200410
+#> 4 566a~ LIMA         LIMA      BREÑA    PCR         32 FEME~        20200403
+#> 5 0275~ LIMA         LIMA      LIMA     PCR         31 FEME~        20200409
+#> 6 f016~ LIMA         LIMA      LIMA     PCR         30 FEME~        20200409
+#> # ... with 6 more variables: year <chr>, month <chr>, day <chr>, fecha <date>,
 #> #   EDAD_n <dbl>, semana <dbl>
 ```
 
@@ -77,16 +77,16 @@ fallecidos=da_fallecidos() # Crea un dataframe con la información de fallecidos
 ``` r
 head(fallecidos)
 #> # A tibble: 6 x 13
-#>   UUID  FECHA_FALLECIMI… EDAD_DECLARADA SEXO  FECHA_NAC DEPARTAMENTO PROVINCIA
+#>   UUID  FECHA_FALLECIMI~ EDAD_DECLARADA SEXO  FECHA_NAC DEPARTAMENTO PROVINCIA
 #>   <chr>            <dbl>          <dbl> <chr>     <dbl> <chr>        <chr>    
-#> 1 6b9e…         20200701             63 MASC…  19561228 LIMA         LIMA     
-#> 2 beca…         20200701             63 MASC…  19570629 LIMA         LIMA     
-#> 3 e5c2…         20200701             67 MASC…  19530524 LA LIBERTAD  ASCOPE   
-#> 4 e844…         20200701             59 MASC…  19610210 LA LIBERTAD  TRUJILLO 
-#> 5 dfe8…         20200701             61 FEME…  19581113 LA LIBERTAD  TRUJILLO 
-#> 6 d780…         20200701             54 FEME…  19650921 LA LIBERTAD  VIRU     
-#> # … with 6 more variables: DISTRITO <chr>, year <chr>, month <chr>, day <chr>,
-#> #   fecha <date>, semana <dbl>
+#> 1 6b9e~         20200701             63 MASC~  19561228 LIMA         LIMA     
+#> 2 beca~         20200701             63 MASC~  19570629 LIMA         LIMA     
+#> 3 e5c2~         20200701             67 MASC~  19530524 LA LIBERTAD  ASCOPE   
+#> 4 e844~         20200701             59 MASC~  19610210 LA LIBERTAD  TRUJILLO 
+#> 5 dfe8~         20200701             61 FEME~  19581113 LA LIBERTAD  TRUJILLO 
+#> 6 d780~         20200701             54 FEME~  19650921 LA LIBERTAD  VIRU     
+#> # ... with 6 more variables: DISTRITO <chr>, year <chr>, month <chr>,
+#> #   day <chr>, fecha <date>, semana <dbl>
 ```
 
 Cargamos el último set de SINADEF disponible en el portal de datos
@@ -99,7 +99,7 @@ sinadef=da_sinadef()
 ``` r
 head(sinadef)
 #> # A tibble: 6 x 6
-#>   fecha      semana  year dia      `DEPARTAMENTO DOMICILIO` `PROVINCIA DOMICILI…
+#>   fecha      semana  year dia      `DEPARTAMENTO DOMICILIO` `PROVINCIA DOMICILI~
 #>   <date>      <dbl> <dbl> <chr>    <chr>                    <chr>               
 #> 1 2020-01-24      4  2020 Friday   CUSCO                    CUSCO               
 #> 2 2020-01-30      5  2020 Thursday CALLAO                   CALLAO              
@@ -199,7 +199,7 @@ head(base,30)
 #>  8      8  2020              2084     2084      0 2020-02-22  
 #>  9      9  2020              2190     2190      0 2020-02-29  
 #> 10     10  2020              2178     2178      0 2020-03-07  
-#> # … with 25 more rows
+#> # ... with 25 more rows
 ```
 
 ``` r
@@ -244,3 +244,107 @@ print(grafico)
 ```
 
 <img src="man/figures/README-unnamed-chunk-10-1.png" width="100%" />
+
+\*\* Juan Gamboa Unsihuay (jesuseduardog) preparó una función que hemos
+agregado al paquete. La función te da como resultado una base y un
+gráfico que describen la población contagiada y la población fallecida
+por sexo y edad. El gráfico tiene una forma piramidal y su eficacia
+reside en que permite caracterizar la distribución por edad y sexo de un
+colectivo determinado, en este caso el grupo de casos covid positivos y
+el grupo de fallecidos covid. Esto a nivel nacional como a nivel
+departamental.
+
+**Lima**
+
+``` r
+base = piramide_fcovid(fallecidos,"Lima")[[1]]
+head(base)
+#> # A tibble: 6 x 3
+#> # Groups:   SEXO, EDAD_CAT [6]
+#>   SEXO     EDAD_CAT     n
+#>   <chr>    <fct>    <int>
+#> 1 FEMENINO [0,5]       11
+#> 2 FEMENINO (5,10]       1
+#> 3 FEMENINO (10,15]      5
+#> 4 FEMENINO (15,20]      7
+#> 5 FEMENINO (20,25]     12
+#> 6 FEMENINO (25,30]     16
+```
+
+``` r
+grafico = piramide_fcovid(fallecidos,"Lima")[[2]]
+print(grafico)
+```
+
+<img src="man/figures/README-piramide_fcovid-1.png" width="100%" />
+
+**Nacional**
+
+``` r
+base <- piramide_pcovid(positivos)[[1]]
+head(base)
+#> # A tibble: 6 x 3
+#> # Groups:   SEXO, EDAD_CAT [6]
+#>   SEXO     EDAD_CAT     n
+#>   <chr>    <fct>    <int>
+#> 1 FEMENINO [0,5]     4515
+#> 2 FEMENINO (5,10]    3497
+#> 3 FEMENINO (10,15]   5403
+#> 4 FEMENINO (15,20]  10970
+#> 5 FEMENINO (20,25]  22020
+#> 6 FEMENINO (25,30]  31647
+```
+
+``` r
+grafico = piramide_pcovid(positivos)[[2]]
+print(grafico)
+```
+
+<img src="man/figures/README-piramide_pcovid_grafico-1.png" width="100%" />
+
+\*\* Cesar Urquizo (CUrquizoU) preparo una función que hemos agregado al
+paquete. Esta funcion replica el modelo del documento de investigación
+*Estimating and simulating a SIRD Model of COVID-19 for many countries,
+states, and cities* de Jesus Fernandez Villaverde y Charles Jones
+(2020).
+
+El modelo permite reconstruir a partir de la base de fallecidos del
+SINADEF, los casos de fallecidos, casos positivos, población vulnerable
+y población recuperada. Asimismo, se calcula la velocidad de contagio
+del virus o también denominado R0. Lo importante de este modelo es que
+permite conocer la dinamica de las principales variables como la
+evolución de los casos de fallecidos, contagiados o recuperados.
+
+**Resultados de la estimación**
+
+``` r
+resultados <- sird_villaverde(sinadef,"Lima")
+```
+
+**Población suceptible**
+
+``` r
+S <- resultados[["S"]]
+head(S)
+#>          [,1]
+#> [1,] 11245182
+#> [2,] 11243884
+#> [3,] 11242630
+#> [4,] 11241420
+#> [5,] 11240245
+#> [6,] 11239082
+```
+
+**R0**
+
+``` r
+r0 <- resultados[["R0"]]
+head(r0)
+#>           [,1]
+#> [1,] 0.7798100
+#> [2,] 0.7704157
+#> [3,] 0.7613932
+#> [4,] 0.7571750
+#> [5,] 0.7682239
+#> [6,] 0.7755911
+```

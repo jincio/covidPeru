@@ -34,7 +34,7 @@ da_fallecidos<-function (){
   fallecidos=readr::read_csv(file, progress = TRUE,col_names = TRUE,
                        readr::locale(encoding = "latin1"),
                        col_types = NULL)
-  fallecidos=mutate(fallecidos,year = substr(FECHA_FALLECIMIENTO,1,4),
+  fallecidos=dplyr::mutate(fallecidos,year = substr(FECHA_FALLECIMIENTO,1,4),
                     month = substr(FECHA_FALLECIMIENTO,5,6),
                     day = substr(FECHA_FALLECIMIENTO,7,8),
                     fecha = as.Date(paste0(year,"-",month,"-",day)),
@@ -64,10 +64,10 @@ da_sinadef<-function (){
   data1 <- data[inicio:nrow(data),]
   data1 <- data1[,colSums(is.na(data1))<nrow(data1)]
   cat("...Creando variables standards")
-  data1 <- data1 %>% filter(`DEPARTAMENTO DOMICILIO` != "EXTRANJERO",
+  data1 <- data1 %>% dplyr::filter(`DEPARTAMENTO DOMICILIO` != "EXTRANJERO",
                             `MUERTE VIOLENTA` %in% c("SIN REGISTRO","NO SE CONOCE")) %>%
-    mutate(fecha = as.Date(FECHA),semana = lubridate::epiweek(fecha), mes = as.numeric(MES),
+    dplyr::mutate(fecha = as.Date(FECHA),semana = lubridate::epiweek(fecha), mes = as.numeric(MES),
            year = as.numeric(Year),dia = weekdays(fecha)) %>%
-    select(fecha,semana,year,dia,`DEPARTAMENTO DOMICILIO`,`PROVINCIA DOMICILIO`)
+    dplyr::select(fecha,semana,year,dia,`DEPARTAMENTO DOMICILIO`,`PROVINCIA DOMICILIO`)
   return(data1)
 }
