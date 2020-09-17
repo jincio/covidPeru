@@ -162,3 +162,50 @@ grafico=panel_exceso(sinadef)
 print(grafico)
 ```
 
+** Juan Gamboa Unsihuay (jesuseduardog) preparó una función que hemos agregado al paquete. La función te da como resultado una base y un gráfico que describen la población contagiada y la población fallecida por sexo y edad. El gráfico tiene una forma piramidal y su eficacia reside en que permite caracterizar la distribución por edad y sexo de un colectivo determinado, en este caso el grupo de casos covid positivos y el grupo de fallecidos covid. Esto a nivel nacional como a nivel departamental.
+
+**Lima**
+```{r piramide_fcovid_base}
+base = piramide_fcovid(fallecidos,"Lima")[[1]]
+head(base)
+```
+
+
+```{r piramide_fcovid}
+grafico = piramide_fcovid(fallecidos,"Lima")[[2]]
+print(grafico)
+```
+
+**Nacional**
+```{r piramide_pcovid}
+base <- piramide_pcovid(positivos)[[1]]
+head(base)
+```
+
+```{r piramide_pcovid_grafico}
+grafico = piramide_pcovid(positivos)[[2]]
+print(grafico)
+```
+
+** Cesar Urquizo (CUrquizoU) preparo una función que hemos agregado al paquete. Esta funcion replica el modelo del documento de investigación *Estimating and simulating a SIRD Model of COVID-19 for many countries, states, and cities* de Jesus Fernandez Villaverde y Charles Jones (2020).
+
+El modelo permite reconstruir a partir de la base de fallecidos del SINADEF, los casos de fallecidos, casos positivos, población vulnerable y población recuperada. Asimismo, se calcula la velocidad de contagio del virus o también denominado R0. Lo importante de este modelo es que permite conocer la dinamica de las principales variables como la evolución de los casos de fallecidos, contagiados o recuperados.
+
+**Resultados de la estimación**
+```{r}
+resultados <- sird_villaverde(sinadef,"Lima")
+```
+
+**Población suceptible**
+```{r}
+S <- resultados[["S"]]
+head(S)
+```
+
+**R0**
+
+```{r}
+r0 <- resultados[["R0"]]
+head(r0)
+```
+
