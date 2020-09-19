@@ -121,28 +121,53 @@ sird_basico<- function(delta, gamma, theta, N, d) {
 #'
 #' @examples
 sird_villaverde <- function(data,DEPARTAMENTO = NULL,delta =0.01 ,gamma =0.1, theta =0.2){
-
+  if (!"DEPARTAMENTO DOMICILIO"%in%colnames(data)){
+    stop("La base de datos es incorrecta, use la función da_sinadef()")
+  }
   #-------------------------------PASO 1--------------------------
+  if(is.null(DEPARTAMENTO)){
+    # Base de datos fallecidos sinadef
+    bases <- data %>%
+      mutate(dia = yday(fecha), mes = as.numeric(substr(fecha,6,7)),
+             anho = as.numeric(substr(fecha,1,4))) %>%
+      select(fecha,dia,mes,anho) %>%
+      group_by(fecha) %>%
+      summarize(dia = mean(dia), mes = mean(mes), anho = mean(anho),cont = n()) %>%
+      ungroup()%>%
+      mutate(dia_mes = paste0(dia,"-",mes))
 
-  departamento_select = toupper(DEPARTAMENTO)
-  # Departamento
-  bases.departamento <- data %>%
-    filter(`DEPARTAMENTO DOMICILIO` == departamento_select)%>%
-    mutate(dia = yday(fecha), mes = as.numeric(substr(fecha,6,7)),
-           anho = as.numeric(substr(fecha,1,4))) %>%
-    select(fecha,dia,mes,anho,`DEPARTAMENTO DOMICILIO`,`PROVINCIA DOMICILIO`) %>%
-    group_by(fecha, `DEPARTAMENTO DOMICILIO`) %>%
-    summarize(dia = mean(dia), mes = mean(mes), anho = mean(anho),cont = n()) %>%
-    ungroup()%>%
-    mutate(dia_mes = paste0(dia,"-",mes))
+    # Poblacion
+    base_reg <- base_poblacion %>% summarise(total = sum(Poblacion))
+  } else{
+    # Bases fallecidos poblacion a nivel regional
+    departamento_select = toupper(DEPARTAMENTO)
+    bases <- data %>%
+      filter(`DEPARTAMENTO DOMICILIO` == departamento_select)%>%
+      mutate(dia = yday(fecha), mes = as.numeric(substr(fecha,6,7)),
+             anho = as.numeric(substr(fecha,1,4))) %>%
+      select(fecha,dia,mes,anho,`DEPARTAMENTO DOMICILIO`,`PROVINCIA DOMICILIO`) %>%
+      group_by(fecha, `DEPARTAMENTO DOMICILIO`) %>%
+      summarize(dia = mean(dia), mes = mean(mes), anho = mean(anho),cont = n()) %>%
+      ungroup()%>%
+      mutate(dia_mes = paste0(dia,"-",mes))
+
+    # Poblacion del departamento
+    departamento_select = tolower(DEPARTAMENTO)
+    base_reg <- base_poblacion %>% filter(Departamento==departamento_select) %>%
+      summarise(total = sum(Poblacion))
+  }
+
+  #-------------------------------PASO 2--------------------------
+
+  # Este procedimiento es el mismo para ambos tipos
   keeps <- c("dia_mes","dia", "mes","anho","cont")
 
   # Exceso de fallecidos
-  bases.departamento <- bases.departamento[,keeps]
-  bases.departamento <- bases.departamento %>% filter(anho %in% c(2019,2020))
+  bases <- bases[,keeps]
+  bases <- bases %>% filter(anho %in% c(2019,2020))
 
   # Filter
-  bases1 <- bases.departamento %>% tidyr::spread(key = anho,value = cont, fill = 0)
+  bases1 <- bases %>% tidyr::spread(key = anho,value = cont, fill = 0)
   colnames(bases1)[c(4,5)] <-c("anho2019","anho2020")
   bases1 <- bases1[order(bases1$dia,bases1$mes),]
   bases1 <- bases1 %>% mutate(excess_death = ifelse(anho2020-anho2019< 0,
@@ -150,20 +175,14 @@ sird_villaverde <- function(data,DEPARTAMENTO = NULL,delta =0.01 ,gamma =0.1, th
 
 
   # Detectar ultimo dia de registro y retrocedemos 7 dias
-  dia_limite <- lubridate::yday(Sys.Date())-7
+  dia_limite <- lubridate::yday(Sys.Date())-10
   tf <- dia_limite
 
   x = mFilter::hpfilter(bases1$excess_death[1:tf],freq=5000,type="lambda",drift=FALSE)
   d = x$trend
-  #-------------------------------PASO 2--------------------------
-  # Poblacion del departamento
-  departamento_select = tolower(DEPARTAMENTO)
-  base_reg <- base_poblacion %>% filter(Departamento==departamento_select) %>%
-    summarise(total = sum(Poblacion))
 
   # Inputs
   N <- base_reg[["total"]]
-  #d <- as.vector(d)
 
   #-------------------------------PASO 3--------------------------
   # Estimacion
