@@ -24,7 +24,7 @@ Empezó como algo de uso personal que espero sirva para tomadores de decisiones,
 
 ## Installation
 
-Puedes instalar el paquete desde este 
+Puedes instalar el paquete siguiendo estos pasos:
 
 ``` r
 install.packages("devtools")

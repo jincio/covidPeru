@@ -17,7 +17,7 @@ datos sobre COVID.
 
 ## Installation
 
-Puedes instalar el paquete desde este
+Puedes instalar el paquete siguiendo estos pasos:
 
 ``` r
 install.packages("devtools")
@@ -57,13 +57,13 @@ head(positivos)
 #> # A tibble: 6 x 14
 #>   UUID  DEPARTAMENTO PROVINCIA DISTRITO METODODX  EDAD SEXO  FECHA_RESULTADO
 #>   <chr> <chr>        <chr>     <chr>    <chr>    <dbl> <chr>           <dbl>
-#> 1 7320~ LIMA         LIMA      SAN BOR~ PCR         34 FEME~        20200325
-#> 2 e816~ LIMA         LIMA      SAN BOR~ PCR         30 FEME~        20200406
-#> 3 71ec~ LIMA         LIMA      SAN BOR~ PCR         34 FEME~        20200410
-#> 4 566a~ LIMA         LIMA      BREÑA    PCR         32 FEME~        20200403
-#> 5 0275~ LIMA         LIMA      LIMA     PCR         31 FEME~        20200409
-#> 6 f016~ LIMA         LIMA      LIMA     PCR         30 FEME~        20200409
-#> # ... with 6 more variables: year <chr>, month <chr>, day <chr>, fecha <date>,
+#> 1 7320… LIMA         LIMA      SAN BOR… PCR         34 FEME…        20200325
+#> 2 e816… LIMA         LIMA      SAN BOR… PCR         30 FEME…        20200406
+#> 3 71ec… LIMA         LIMA      SAN BOR… PCR         34 FEME…        20200410
+#> 4 566a… LIMA         LIMA      BREÑA    PCR         32 FEME…        20200403
+#> 5 0275… LIMA         LIMA      LIMA     PCR         31 FEME…        20200409
+#> 6 f016… LIMA         LIMA      LIMA     PCR         30 FEME…        20200409
+#> # … with 6 more variables: year <chr>, month <chr>, day <chr>, fecha <date>,
 #> #   EDAD_n <dbl>, semana <dbl>
 ```
 
@@ -77,16 +77,16 @@ fallecidos=da_fallecidos() # Crea un dataframe con la información de fallecidos
 ``` r
 head(fallecidos)
 #> # A tibble: 6 x 13
-#>   UUID  FECHA_FALLECIMI~ EDAD_DECLARADA SEXO  FECHA_NAC DEPARTAMENTO PROVINCIA
+#>   UUID  FECHA_FALLECIMI… EDAD_DECLARADA SEXO  FECHA_NAC DEPARTAMENTO PROVINCIA
 #>   <chr>            <dbl>          <dbl> <chr>     <dbl> <chr>        <chr>    
-#> 1 6b9e~         20200701             63 MASC~  19561228 LIMA         LIMA     
-#> 2 beca~         20200701             63 MASC~  19570629 LIMA         LIMA     
-#> 3 e5c2~         20200701             67 MASC~  19530524 LA LIBERTAD  ASCOPE   
-#> 4 e844~         20200701             59 MASC~  19610210 LA LIBERTAD  TRUJILLO 
-#> 5 dfe8~         20200701             61 FEME~  19581113 LA LIBERTAD  TRUJILLO 
-#> 6 d780~         20200701             54 FEME~  19650921 LA LIBERTAD  VIRU     
-#> # ... with 6 more variables: DISTRITO <chr>, year <chr>, month <chr>,
-#> #   day <chr>, fecha <date>, semana <dbl>
+#> 1 6b9e…         20200701             63 MASC…  19561228 LIMA         LIMA     
+#> 2 beca…         20200701             63 MASC…  19570629 LIMA         LIMA     
+#> 3 e5c2…         20200701             67 MASC…  19530524 LA LIBERTAD  ASCOPE   
+#> 4 e844…         20200701             59 MASC…  19610210 LA LIBERTAD  TRUJILLO 
+#> 5 dfe8…         20200701             61 FEME…  19581113 LA LIBERTAD  TRUJILLO 
+#> 6 d780…         20200701             54 FEME…  19650921 LA LIBERTAD  VIRU     
+#> # … with 6 more variables: DISTRITO <chr>, year <chr>, month <chr>, day <chr>,
+#> #   fecha <date>, semana <dbl>
 ```
 
 Cargamos el último set de SINADEF disponible en el portal de datos
@@ -99,7 +99,7 @@ sinadef=da_sinadef()
 ``` r
 head(sinadef)
 #> # A tibble: 6 x 6
-#>   fecha      semana  year dia      `DEPARTAMENTO DOMICILIO` `PROVINCIA DOMICILI~
+#>   fecha      semana  year dia      `DEPARTAMENTO DOMICILIO` `PROVINCIA DOMICILI…
 #>   <date>      <dbl> <dbl> <chr>    <chr>                    <chr>               
 #> 1 2020-01-24      4  2020 Friday   CUSCO                    CUSCO               
 #> 2 2020-01-30      5  2020 Thursday CALLAO                   CALLAO              
@@ -199,7 +199,7 @@ head(base,30)
 #>  8      8  2020              2084     2084      0 2020-02-22  
 #>  9      9  2020              2190     2190      0 2020-02-29  
 #> 10     10  2020              2178     2178      0 2020-03-07  
-#> # ... with 25 more rows
+#> # … with 25 more rows
 ```
 
 ``` r
