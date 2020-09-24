@@ -214,7 +214,7 @@ Adicional, el paquete contiene la función sird_graficos que permite realizar un
 ```{r}
 graficos <- sird_graficos(resultados)
 ```
-
+ 
 **R0** 
 ```{r}
 print(graficos[[1]])

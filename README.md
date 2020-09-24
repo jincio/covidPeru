@@ -99,14 +99,14 @@ sinadef=da_sinadef()
 ``` r
 head(sinadef)
 #> # A tibble: 6 x 6
-#>   fecha      semana  year dia      `DEPARTAMENTO DOMICILIO` `PROVINCIA DOMICILI…
-#>   <date>      <dbl> <dbl> <chr>    <chr>                    <chr>               
-#> 1 2020-01-24      4  2020 Friday   CUSCO                    CUSCO               
-#> 2 2020-01-30      5  2020 Thursday CALLAO                   CALLAO              
-#> 3 2020-01-19      4  2020 Sunday   CAJAMARCA                CAJAMARCA           
-#> 4 2020-01-13      3  2020 Monday   LA LIBERTAD              TRUJILLO            
-#> 5 2020-01-25      4  2020 Saturday CAJAMARCA                CAJAMARCA           
-#> 6 2020-01-12      3  2020 Sunday   JUNIN                    YAULI
+#>   fecha      semana  year dia       `DEPARTAMENTO DOMICILI… `PROVINCIA DOMICILI…
+#>   <date>      <dbl> <dbl> <chr>     <chr>                   <chr>               
+#> 1 2020-01-22      4  2020 Wednesday LIMA                    LIMA                
+#> 2 2020-01-24      4  2020 Friday    CUSCO                   CUSCO               
+#> 3 2020-01-30      5  2020 Thursday  CALLAO                  CALLAO              
+#> 4 2020-01-19      4  2020 Sunday    CAJAMARCA               CAJAMARCA           
+#> 5 2020-01-13      3  2020 Monday    LA LIBERTAD             TRUJILLO            
+#> 6 2020-01-25      4  2020 Saturday  CAJAMARCA               CAJAMARCA
 ```
 
 Una vez con las bases podemos usar las otras funciones para generar
@@ -183,28 +183,28 @@ muertos de los años 2017,2018, 2019 con la semana de comparación.
 
 ``` r
 base=exceso_muertes(sinadef)[1]
-#> [1] "Ojo: archivo actualizado al 2020-08-31 tomamos referencia hasta la semana 35"
+#> [1] "Ojo: archivo actualizado al 2020-09-23 tomamos referencia hasta la semana 38"
 head(base,30)
 #> [[1]]
-#> # A tibble: 35 x 6
+#> # A tibble: 38 x 6
 #>    semana  year numero_fallecidos Esperado Exceso fecha_ultima
 #>     <dbl> <dbl>             <int>    <dbl>  <dbl> <date>      
-#>  1      1  2020              1224     1224      0 2020-01-04  
-#>  2      2  2020              2167     2167      0 2020-01-11  
-#>  3      3  2020              2120     2120      0 2020-01-18  
-#>  4      4  2020              2107     2107      0 2020-01-25  
-#>  5      5  2020              1995     1995      0 2020-02-01  
-#>  6      6  2020              2120     2120      0 2020-02-08  
-#>  7      7  2020              2099     2099      0 2020-02-15  
-#>  8      8  2020              2084     2084      0 2020-02-22  
-#>  9      9  2020              2190     2190      0 2020-02-29  
-#> 10     10  2020              2178     2178      0 2020-03-07  
-#> # … with 25 more rows
+#>  1      1  2020              1233     1233      0 2020-01-04  
+#>  2      2  2020              2187     2187      0 2020-01-11  
+#>  3      3  2020              2130     2130      0 2020-01-18  
+#>  4      4  2020              2117     2117      0 2020-01-25  
+#>  5      5  2020              2011     2011      0 2020-02-01  
+#>  6      6  2020              2142     2142      0 2020-02-08  
+#>  7      7  2020              2119     2119      0 2020-02-15  
+#>  8      8  2020              2107     2107      0 2020-02-22  
+#>  9      9  2020              2211     2211      0 2020-02-29  
+#> 10     10  2020              2210     2210      0 2020-03-07  
+#> # … with 28 more rows
 ```
 
 ``` r
 grafico=exceso_muertes(sinadef)[2]
-#> [1] "Ojo: archivo actualizado al 2020-08-31 tomamos referencia hasta la semana 35"
+#> [1] "Ojo: archivo actualizado al 2020-09-23 tomamos referencia hasta la semana 38"
 print(grafico)
 #> [[1]]
 ```
@@ -213,7 +213,7 @@ print(grafico)
 
 ``` r
 grafico=exceso_muertes(sinadef,metodo = FALSE)[2]
-#> [1] "Ojo: archivo actualizado al 2020-08-31 tomamos referencia hasta la semana 35"
+#> [1] "Ojo: archivo actualizado al 2020-09-23 tomamos referencia hasta la semana 38"
 print(grafico)
 #> [[1]]
 ```
@@ -224,7 +224,7 @@ print(grafico)
 
 ``` r
 Lima=exceso_muertes(sinadef,"Lima")[2]
-#> [1] "Ojo: archivo actualizado al 2020-08-31 tomamos referencia hasta la semana 35"
+#> [1] "Ojo: archivo actualizado al 2020-09-23 tomamos referencia hasta la semana 38"
 print(Lima)
 #> [[1]]
 ```
@@ -326,7 +326,7 @@ resultados <- sird_villaverde(sinadef,"Lima")
 ``` r
 S <- resultados[["S"]]
 head(S)
-#> [1] 11245182 11241754 11238261 11234677 11230993 11227175
+#> [1] 11245182 11241647 11238049 11234361 11230574 11226654
 ```
 
 **R0**
@@ -334,7 +334,7 @@ head(S)
 ``` r
 r0 <- resultados[["R0"]]
 head(r0)
-#> [1] 1.058063 1.072254 1.092854 1.113420 1.141351 1.175136
+#> [1] 1.051583 1.065327 1.085292 1.105263 1.132675 1.165557
 ```
 
 Adicional, el paquete contiene la función sird\_graficos que permite
@@ -357,7 +357,6 @@ print(graficos[[1]])
 
 ``` r
 print(graficos[[2]])
-#> Warning: Removed 15 row(s) containing missing values (geom_path).
 ```
 
 <img src="man/figures/README-unnamed-chunk-16-1.png" width="100%" />
