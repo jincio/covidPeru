@@ -348,3 +348,28 @@ head(r0)
 #> [5,] 0.7682239
 #> [6,] 0.7755911
 ```
+
+Adicional, el paquete contiene la función sird\_graficos que permite
+realizar una inspección gráfica de los resultados obtenidos del modelo
+Villaverde.
+
+**Principales variables SIRD**
+
+``` r
+graficos <- sird_graficos(resultados)
+```
+
+**R0**
+
+``` r
+print(graficos[[1]])
+```
+
+<img src="man/figures/README-unnamed-chunk-15-1.png" width="100%" />
+
+``` r
+print(graficos[[2]])
+#> Warning: Removed 3 row(s) containing missing values (geom_path).
+```
+
+<img src="man/figures/README-unnamed-chunk-16-1.png" width="100%" />
