@@ -139,3 +139,59 @@ piramide_pcovid <- function(data,DEPARTAMENTO=NULL){
   }
   return(list(data.piramide,grafico.piramide))
 }
+
+
+#' SIRD graficos
+#'
+#' @param resultados output generado por la funcion sird_villaverde()
+#'
+#' @return
+#' @export
+#'
+#' @examples
+sird_graficos <- function(resultados){
+
+  # VARIABLES SIRD
+  S <- resultados[["S"]]
+  I <- resultados[["I"]]
+  R <- resultados[["R"]]
+  D <- resultados[["D"]]
+
+  # RO
+  R0 <- resultados[["R0"]]
+
+  # Graficos
+  grafico_s <- ggplot2::ggplot() +
+    ggplot2::geom_line(aes(x = c(1:length(S)), y = S),colour = "lightblue4", size = 2.0) +
+    ggplot2::labs(x = "Dia de inicio de la Pandemia",y ="Número de personas suceptibles",
+                  title = "Evolución de la población Suceptible (S)") + ggplot2::theme_bw()
+
+  grafico_i <- ggplot2::ggplot() +
+    ggplot2::geom_line(aes(x = c(1:length(I)), y = I),colour = "orange2", size = 2.0) +
+    ggplot2::labs(x = "Dia de inicio de la Pandemia", y ="Número de personas infectadas",
+                  title = "Evolución de la población Infectada (I)")+ ggplot2::theme_bw()
+
+  grafico_r <- ggplot2::ggplot() +
+    ggplot2::geom_line(aes(x = c(1:length(R)), y = R),colour = "olivedrab4", size = 2.0) +
+    ggplot2::labs(x = "Dia de inicio de la Pandemia", y ="Número de personas recuperadas",
+                  title = "Evolución de la población Recuperada (R)")+ ggplot2::theme_bw()
+
+  grafico_d <- ggplot2::ggplot() +
+    ggplot2::geom_line(aes(x = c(1:length(D)), y = D),colour = "navy", size = 2.0) +
+    labs(x = "Dia de inicio de la Pandemia", y ="Número de personas fallecidas",
+         title = "Evolución de la población Fallecida (D)")+ theme_bw()
+
+  grafico_r0 <- ggplot2::ggplot()+
+    ggplot2::geom_line(aes(x = c(1:length(R0)), y = R0),colour = "yellow4", size = 2.0) +
+    ggplot2::labs(x = "Dia de inicio de la Pandemia",y ="Velocidad de contagio",
+                  title = "Evolución del coeficiente R0")+
+    ylim(0,2.0)+ geom_hline(yintercept = 1, colour = "red")+ ggplot2::theme_bw()
+
+  grafico_grupal <- ggpubr::ggarrange(grafico_s, grafico_i, grafico_r,grafico_d,
+                                      labels = c("A", "B", "C","D"),
+                                      ncol = 2, nrow = 2)
+
+  grafico_final =list(grafico_grupal,grafico_r0)
+
+  return(grafico_final)
+}

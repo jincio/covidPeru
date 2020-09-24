@@ -203,9 +203,23 @@ head(S)
 ```
 
 **R0**
-
 ```{r}
 r0 <- resultados[["R0"]]
 head(r0)
 ```
 
+Adicional, el paquete contiene la función sird_graficos que permite realizar una inspección gráfica de los resultados obtenidos del modelo Villaverde.
+
+**Principales variables SIRD**
+```{r}
+graficos <- sird_graficos(resultados)
+```
+
+**R0**
+```{r}
+print(graficos[[1]])
+```
+
+```{r}
+print(graficos[[2]])
+```
