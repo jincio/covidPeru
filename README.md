@@ -326,13 +326,7 @@ resultados <- sird_villaverde(sinadef,"Lima")
 ``` r
 S <- resultados[["S"]]
 head(S)
-#>          [,1]
-#> [1,] 11245182
-#> [2,] 11243884
-#> [3,] 11242630
-#> [4,] 11241420
-#> [5,] 11240245
-#> [6,] 11239082
+#> [1] 11245182 11241754 11238261 11234677 11230993 11227175
 ```
 
 **R0**
@@ -340,13 +334,7 @@ head(S)
 ``` r
 r0 <- resultados[["R0"]]
 head(r0)
-#>           [,1]
-#> [1,] 0.7798100
-#> [2,] 0.7704157
-#> [3,] 0.7613932
-#> [4,] 0.7571750
-#> [5,] 0.7682239
-#> [6,] 0.7755911
+#> [1] 1.058063 1.072254 1.092854 1.113420 1.141351 1.175136
 ```
 
 Adicional, el paquete contiene la función sird\_graficos que permite
@@ -369,7 +357,7 @@ print(graficos[[1]])
 
 ``` r
 print(graficos[[2]])
-#> Warning: Removed 3 row(s) containing missing values (geom_path).
+#> Warning: Removed 15 row(s) containing missing values (geom_path).
 ```
 
 <img src="man/figures/README-unnamed-chunk-16-1.png" width="100%" />
