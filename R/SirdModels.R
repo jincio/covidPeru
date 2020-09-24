@@ -177,17 +177,16 @@ sird_villaverde <- function(data,DEPARTAMENTO = NULL,delta =0.01 ,gamma =0.1, th
 
 
   # Detectar ultimo dia de registro y retrocedemos 7 dias
-  dia_limite <- lubridate::yday(Sys.Date())-10
-  tf <- dia_limite
+  dia_limite <- lubridate::yday(Sys.Date())-7
 
-  x = mFilter::hpfilter(bases1$excess_death[1:tf],freq=5000,type="lambda",drift=FALSE)
+  x = mFilter::hpfilter(bases1$excess_death[1:dia_limite],freq=5000,type="lambda",drift=FALSE)
   d = x$trend
 
   # Inputs
   N <- base_reg[["total"]]
 
   #-------------------------------PASO 3--------------------------
-  # Estimacion
+  # Estimacion se realiza hasta 7 dias atras
   resultados <- sird_basico(delta, gamma, theta, N, d)
 
   return(resultados)
