@@ -42,6 +42,7 @@ library(ggplot2) ## Necesario!
 library(lubridate)## Necesario!
 library(purrr) ## Necesario
 library(MMWRweek) ## Necesario
+library(data.table) ## Necesario
 library(covidPeru) 
 ```
 
