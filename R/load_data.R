@@ -30,7 +30,7 @@ da_positivos<-function (){
 da_fallecidos<-function (){
   file="https://cloud.minsa.gob.pe/s/Md37cjXmjT9qYSa/download"
   data=data.table::fread(file,encoding="Latin-1")
-  fallecidos=dplyr::mutate(fallecidos,year = substr(FECHA_FALLECIMIENTO,1,4),
+  fallecidos=dplyr::mutate(data,year = substr(FECHA_FALLECIMIENTO,1,4),
                            month = substr(FECHA_FALLECIMIENTO,5,6),
                            day = substr(FECHA_FALLECIMIENTO,7,8),
                            fecha = as.Date(paste0(year,"-",month,"-",day)),
@@ -46,7 +46,7 @@ da_fallecidos<-function (){
 #' @examples
 da_sinadef<-function (){
   file="https://cloud.minsa.gob.pe/s/nqF2irNbFomCLaa/download"
-  data.table::fread(file,encoding="Latin-1")
+  data=data.table::fread(file,encoding="Latin-1")
   cat("si lees esto es que el archivo bajo bien :)")
   cat("...limpiando el archivo")
   espacio_columna <- which(data[,1]=="Nº")[1]
