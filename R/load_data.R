@@ -51,7 +51,7 @@ da_sinadef<-function (){
   cat("...limpiando el archivo")
   espacio_columna <- which(data[,1]=="Nº")[1]
   col_names <- data[espacio_columna,]
-  colnames(data) <- data.frame(t(col_names))[,1]
+  colnames(data) <- dplyr::as_tibble(t(col_names))$V1
   colnames(data)[14] <-"Year"
   inicio <- espacio_columna+1
   cat("...Eliminamos informacion vacia")
