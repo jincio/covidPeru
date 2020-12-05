@@ -16,6 +16,7 @@ piramide_fcovid<- function(data,DEPARTAMENTO=NULL){
   if(is.null(DEPARTAMENTO)){
 
     data.piramide = data %>%
+     dplyr::filter(SEXO%in%c("FEMENINO","MASCULINO"))%>%
       dplyr::mutate(EDAD_CAT = cut(EDAD_DECLARADA,
                                    #breaks = c(0,5,10,15,20,25,30,35,40,45,50,55,60,65,70,75,80,85,90,95,100,120),
                                    breaks = seq(0,120,5),
@@ -23,7 +24,7 @@ piramide_fcovid<- function(data,DEPARTAMENTO=NULL){
       dplyr::filter(!is.na(EDAD_CAT)) %>%
       dplyr::group_by(SEXO,EDAD_CAT) %>%
       count()
-
+    
     grafico.piramide = data.piramide %>%
       dplyr::mutate(n = ifelse(SEXO=="FEMENINO",
                         -n, n)) %>%
@@ -45,6 +46,7 @@ piramide_fcovid<- function(data,DEPARTAMENTO=NULL){
       dplyr::mutate(EDAD_CAT = cut(EDAD_DECLARADA,
                                    breaks = c(0,5,10,15,20,25,30,35,40,45,50,55,60,65,70,75,80,85,90,95,100,120),
                                    include.lowest = TRUE)) %>%
+    dplyr::filter(SEXO%in%c("FEMENINO","MASCULINO"))%>%
       dplyr::filter(!is.na(EDAD_CAT)) %>%
       dplyr::group_by(SEXO,EDAD_CAT) %>%
       count()
