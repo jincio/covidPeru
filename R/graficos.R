@@ -24,7 +24,6 @@ piramide_fcovid<- function(data,DEPARTAMENTO=NULL){
       dplyr::filter(!is.na(EDAD_CAT)) %>%
       dplyr::group_by(SEXO,EDAD_CAT) %>%
       count()
-#prueba
     
     grafico.piramide = data.piramide %>%
       dplyr::mutate(n = ifelse(SEXO=="FEMENINO",
