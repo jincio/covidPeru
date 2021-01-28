@@ -15,7 +15,7 @@ exceso_muertes<-function(data,DEPARTAMENTO=NULL,metodo=TRUE){
   #att <- assertthat::assert_that
   if(is.null(DEPARTAMENTO)){
     titulo=paste0("Exceso de fallecidos a nivel nacional")
-    data=sinadef1
+    data=data
     ult_semana=lubridate::epiweek(max(data$fecha))
     ult_dia=weekdays(max(data$fecha))
     actualizacion=lubridate::date(max(data$fecha))
