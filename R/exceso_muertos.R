@@ -45,8 +45,7 @@ exceso_muertes<-function(data,DEPARTAMENTO=NULL,metodo=TRUE){
       ggplot2::geom_line(aes(x =fecha_ultima, y = numero_fallecidos,colour = "Observado"),size = 1.2)+
         theme(legend.position = "bottom",axis.text.x=element_text(angle=90, hjust=1))+
         scale_color_manual("Leyenda",values = c("Esperado" = "#386cb0","Observado" ="red3"))+
-        labs(x = "Mes",y = "Número de fallecidos",title = titulo,
-             caption = "Metodo 2020")+
+        labs(x = "Mes",y ="Numero de fallecidos",title = titulo,caption = "Metodo 2020")+
         scale_x_date(date_breaks ="1 month", date_labels = "%b %Y")
       resultado=list(f_semana_depa, grafico)
     }
@@ -73,18 +72,18 @@ exceso_muertes<-function(data,DEPARTAMENTO=NULL,metodo=TRUE){
         geom_line(aes(x = fecha_ultima, y = `2020`,colour = "Observado"),size = 1.2)+
         theme(legend.position = "bottom",axis.text.x=element_text(angle=90, hjust=1))+
         scale_color_manual("Leyenda",values = c("Esperado" = "#386cb0","Observado" ="red3"))+
-        labs(x = "Mes",y = "Número de fallecidos",title = titulo,
+        labs(x = "Mes",y = "Numero de fallecidos",title = titulo,
              caption = "Metodo historico")+
         scale_x_date(date_breaks = "1 month", date_labels =  "%b %Y")
       resultado=list(f_semana_dep1, grafico)
     } 
-  grafico
+
   }
   else{
     DEPARTAMENTO=toupper(DEPARTAMENTO)
     titulo=paste0("Exceso de fallecidos por semana en ",DEPARTAMENTO)
     data=data
-    departamento_select="LIMA"
+    departamento_select=DEPARTAMENTO
     ult_semana=lubridate::epiweek(max(data$fecha))
     ult_dia=weekdays(max(data$fecha))
     actualizacion=lubridate::date(max(data$fecha))
@@ -101,6 +100,7 @@ exceso_muertes<-function(data,DEPARTAMENTO=NULL,metodo=TRUE){
         summarize(numero_fallecidos=n())%>%  
         arrange(year) %>% 
         filter(year>=2020)%>% 
+        ungroup()%>%
         dplyr::mutate(Esperado =
                         ifelse(semana>=1,mean(numero_fallecidos[semana<11]),
                                numero_fallecidos))%>% 
@@ -141,7 +141,7 @@ exceso_muertes<-function(data,DEPARTAMENTO=NULL,metodo=TRUE){
         geom_line(aes(x = fecha_ultima, y = `2020`,colour = "Observado"),size = 1.2)+
         theme(legend.position = "bottom",axis.text.x=element_text(angle=90, hjust=1))+
         scale_color_manual("Leyenda",values = c("Esperado" = "#386cb0","Observado" ="red3"))+
-        labs(x = "Mes",y = "Número de fallecidos",title = titulo,
+        labs(x = "Mes",y = "Numero de fallecidos",title = titulo,
              caption = "Metodo historico")+
         scale_x_date(date_breaks = "1 month", date_labels =  "%b %Y")
       resultado=list(f_semana_dep1, grafico)
@@ -149,4 +149,4 @@ exceso_muertes<-function(data,DEPARTAMENTO=NULL,metodo=TRUE){
   }
   return(resultado)
   }
-exceso_muertes(sinadef1)
+

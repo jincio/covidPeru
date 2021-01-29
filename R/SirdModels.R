@@ -167,19 +167,19 @@ sird_villaverde <- function(data,DEPARTAMENTO = NULL,delta =0.01 ,gamma =0.1, th
   # Exceso de fallecidos
   bases <- bases[,keeps]
   bases <- bases %>% filter(anho %in% c(2019,2020))
-
   # Filter
-  bases1 <- bases %>% tidyr::spread(key = anho,value = cont, fill = 0)
+ bases1 <- bases %>% tidyr::spread(key = anho,value = cont, fill = 0)
   colnames(bases1)[c(4,5)] <-c("anho2019","anho2020")
   bases1 <- bases1[order(bases1$dia,bases1$mes),]
-  bases1 <- bases1 %>% mutate(excess_death = ifelse(anho2020-anho2019< 0,
-                                                    0,anho2020-anho2019))
+ bases1 <- bases1 %>% mutate(excess_death = ifelse(anho2020-anho2019< 0,
+                                                  0,anho2020-anho2019))
 
-
-  # Detectar ultimo dia de registro y retrocedemos 7 dias
+   # Detectar ultimo dia de registro y retrocedemos 7 dias
   dia_limite <- lubridate::yday(Sys.Date())-7
 
-  x = mFilter::hpfilter(bases1$excess_death[1:dia_limite],freq=5000,type="lambda",drift=FALSE)
+ # x = mFilter::hpfilter(bases1$excess_death[1:dia_limite],freq=5000,type="lambda",drift=FALSE)
+  x = mFilter::hpfilter(bases1$excess_death,freq=5000,type="lambda",drift=FALSE) #verificar
+  
   d = x$trend
 
   # Inputs
