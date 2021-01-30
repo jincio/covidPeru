@@ -26,15 +26,17 @@ exceso_muertes<-function(data,DEPARTAMENTO=NULL,metodo=TRUE){
     {
       f_semana_depa=data%>%
         dplyr::select("semana","year")%>%
+        dplyr::mutate(year=ifelse(semana==53,2020,year))%>%
         group_by(semana, year)%>%
-        summarize(numero_fallecidos=n()) %>% arrange(year) %>% filter(year==2020) %>%
-        ungroup() %>%
+        summarize(numero_fallecidos=n())%>% 
+       arrange(year)%>%
+      filter(year>=2020)%>%
+      ungroup()%>%
         dplyr::mutate(Esperado =
-                        ifelse(semana>10,mean(numero_fallecidos[semana<11],na.rm = T),
-                               numero_fallecidos)) %>%
+                        ifelse(semana>=1,mean(numero_fallecidos[semana<11],na.rm = T),
+                               numero_fallecidos))%>%
         dplyr::mutate(Exceso = ifelse(numero_fallecidos-Esperado<0,0,
                                       numero_fallecidos-Esperado))%>%
-        filter(semana<=semana_tomada)  %>%
         mutate(fecha_ultima = MMWRweek::MMWRweek2Date(year,semana,07))
 
       grafico <- f_semana_depa %>%
@@ -43,23 +45,25 @@ exceso_muertes<-function(data,DEPARTAMENTO=NULL,metodo=TRUE){
       ggplot2::geom_line(aes(x =fecha_ultima, y = numero_fallecidos,colour = "Observado"),size = 1.2)+
         theme(legend.position = "bottom",axis.text.x=element_text(angle=90, hjust=1))+
         scale_color_manual("Leyenda",values = c("Esperado" = "#386cb0","Observado" ="red3"))+
-        labs(x = "Mes",y = "Número de fallecidos",title = titulo,
-             caption = "Metodo 2020")+
-        scale_x_date(date_breaks = "1 month", date_labels =  "%b %Y")
+        labs(x = "Mes",y ="Numero de fallecidos",title = titulo,caption = "Metodo 2020")+
+        scale_x_date(date_breaks ="1 month", date_labels = "%b %Y")
       resultado=list(f_semana_depa, grafico)
     }
     else if (isFALSE(metodo)){
       f_semana_depa=data%>%
         dplyr::select("semana","year")%>%
+        dplyr::mutate(year=ifelse(semana==53,2020,year))%>%
         group_by(semana, year)%>%
-        summarize(numero_fallecidos=n()) %>% arrange(year)
+        summarize(numero_fallecidos=n()) %>% 
+        arrange(year)
       f_semana_dep1 <- tidyr::spread(f_semana_depa,year,numero_fallecidos)
       row_mean = rowMeans(f_semana_dep1[,c("2017","2018","2019")])
       row_mean = round(row_mean,0)
 
       f_semana_dep1$esperado = row_mean
       f_semana_dep1 <- f_semana_dep1[!is.na(f_semana_dep1$`2020`),]
-      f_semana_dep1=f_semana_dep1%>%filter(semana<=semana_tomada) %>%
+      f_semana_dep1=f_semana_dep1%>%
+        #filter(semana<=semana_tomada)%>% 
         mutate(fecha_ultima = MMWRweek::MMWRweek2Date(2020,semana,07))
       
 
@@ -68,11 +72,12 @@ exceso_muertes<-function(data,DEPARTAMENTO=NULL,metodo=TRUE){
         geom_line(aes(x = fecha_ultima, y = `2020`,colour = "Observado"),size = 1.2)+
         theme(legend.position = "bottom",axis.text.x=element_text(angle=90, hjust=1))+
         scale_color_manual("Leyenda",values = c("Esperado" = "#386cb0","Observado" ="red3"))+
-        labs(x = "Mes",y = "Número de fallecidos",title = titulo,
+        labs(x = "Mes",y = "Numero de fallecidos",title = titulo,
              caption = "Metodo historico")+
         scale_x_date(date_breaks = "1 month", date_labels =  "%b %Y")
       resultado=list(f_semana_dep1, grafico)
-    }
+    } 
+
   }
   else{
     DEPARTAMENTO=toupper(DEPARTAMENTO)
@@ -87,16 +92,20 @@ exceso_muertes<-function(data,DEPARTAMENTO=NULL,metodo=TRUE){
                  " tomamos referencia hasta la semana ",semana_tomada))
     if (isTRUE(metodo))
     {
-      f_semana_depa=data%>%filter(`DEPARTAMENTO DOMICILIO`==departamento_select)%>%
+      f_semana_depa=data%>%
+        filter(`DEPARTAMENTO DOMICILIO`==departamento_select)%>%
         dplyr::select("year","semana")%>%
+        dplyr::mutate(year=ifelse(semana==53,2020,year))%>%        
         group_by(year, semana)%>%
-        summarize(numero_fallecidos=n()) %>% arrange(year) %>% filter(year==2020) %>%
+        summarize(numero_fallecidos=n())%>%  
+        arrange(year) %>% 
+        filter(year>=2020)%>% 
+        ungroup()%>%
         dplyr::mutate(Esperado =
-                        ifelse(semana>10,mean(numero_fallecidos[semana<11]),
-                               numero_fallecidos)) %>%
+                        ifelse(semana>=1,mean(numero_fallecidos[semana<11]),
+                               numero_fallecidos))%>% 
         dplyr::mutate(Exceso = ifelse(numero_fallecidos-Esperado<0,0,
                                       numero_fallecidos-Esperado))%>%
-        filter(semana<=semana_tomada) %>%
         mutate(fecha_ultima = MMWRweek::MMWRweek2Date(year,semana,07))
         #MMWRweek::MMWRweek2Date(year,semana,07)
 
@@ -115,6 +124,7 @@ exceso_muertes<-function(data,DEPARTAMENTO=NULL,metodo=TRUE){
     else if (isFALSE(metodo)){
       f_semana_depa=data%>% filter(`DEPARTAMENTO DOMICILIO`==departamento_select) %>%
         dplyr::select("semana","year")%>%
+        dplyr::mutate(year=ifelse(semana==53,2020,year))%>%
         group_by(semana, year)%>%
         summarize(numero_fallecidos=n()) %>% arrange(year)
       f_semana_dep1 <- tidyr::spread(f_semana_depa,year,numero_fallecidos)
@@ -123,7 +133,7 @@ exceso_muertes<-function(data,DEPARTAMENTO=NULL,metodo=TRUE){
 
       f_semana_dep1$esperado = row_mean
       f_semana_dep1 <- f_semana_dep1[!is.na(f_semana_dep1$`2020`),]
-      f_semana_dep1=f_semana_dep1%>%filter(semana<=semana_tomada)%>%
+      f_semana_dep1=f_semana_dep1%>%
         mutate(fecha_ultima = MMWRweek::MMWRweek2Date(2020,semana,07))
       
       grafico <- f_semana_dep1 %>%ggplot2::ggplot() +
@@ -131,7 +141,7 @@ exceso_muertes<-function(data,DEPARTAMENTO=NULL,metodo=TRUE){
         geom_line(aes(x = fecha_ultima, y = `2020`,colour = "Observado"),size = 1.2)+
         theme(legend.position = "bottom",axis.text.x=element_text(angle=90, hjust=1))+
         scale_color_manual("Leyenda",values = c("Esperado" = "#386cb0","Observado" ="red3"))+
-        labs(x = "Mes",y = "Número de fallecidos",title = titulo,
+        labs(x = "Mes",y = "Numero de fallecidos",title = titulo,
              caption = "Metodo historico")+
         scale_x_date(date_breaks = "1 month", date_labels =  "%b %Y")
       resultado=list(f_semana_dep1, grafico)
@@ -139,3 +149,4 @@ exceso_muertes<-function(data,DEPARTAMENTO=NULL,metodo=TRUE){
   }
   return(resultado)
   }
+
