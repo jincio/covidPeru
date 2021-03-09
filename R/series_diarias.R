@@ -110,7 +110,7 @@ casos_diarios<-function(data,DEPARTAMENTO=NULL,mediamovil=NA){
         summarize(count=n())
       grafico <- f_dia_depa %>% ggplot2::ggplot(aes(x = fecha, y = count)) +
         ggplot2::geom_bar(stat="identity")+
-        labs(y="fallecidos diarios",title = titulo)#+
+        labs(y="Casos diarios",title = titulo)#+
         #ggplot2::geom_line(size = 1.2,colour = "darkblue")
       resultado=list(f_dia_depa, grafico)
       #return(f_dia_depa)
@@ -124,7 +124,7 @@ casos_diarios<-function(data,DEPARTAMENTO=NULL,mediamovil=NA){
         mutate(media.movil = zoo::rollmean(count,k=k, fill=NA,align = "right"))
       grafico <- f_dia_depa %>% ggplot2::ggplot(aes(x = fecha, y = media.movil)) +
         ggplot2::geom_bar(stat="identity")+
-        labs(y="fallecidos diarios",title = titulo)+
+        labs(y="Casos diarios",title = titulo)+
         ggplot2::geom_line(aes(x = fecha, y = count),size = 1.2,colour = "darkblue")
       resultado=list(f_dia_depa, grafico)### Grafico aquí de barras con media movil?
       #return(f_dia_depa)
@@ -144,7 +144,7 @@ casos_diarios<-function(data,DEPARTAMENTO=NULL,mediamovil=NA){
         summarize(count=n())
       grafico <- f_dia_depa %>% ggplot2::ggplot(aes(x = fecha, y = count)) +
         ggplot2::geom_bar(stat="identity")+
-        labs(y="fallecidos diarios",title = titulo)#+
+        labs(y="Casos diarios",title = titulo)#+
         #ggplot2::geom_line(size = 1.2,colour = "darkblue")
 
       resultado=list(f_dia_depa, grafico)
@@ -159,7 +159,7 @@ casos_diarios<-function(data,DEPARTAMENTO=NULL,mediamovil=NA){
         mutate(media.movil = zoo::rollmean(count,k=k, fill=NA,align = "right"))
       grafico <- f_dia_depa %>% ggplot2::ggplot(aes(x = fecha, y = media.movil)) +
         ggplot2::geom_bar(stat="identity")+
-        labs(y="fallecidos diarios",title = titulo)+
+        labs(y="Casos diarios",title = titulo)+
         ggplot2::geom_line(aes(x = fecha, y = count),size = 1.2,colour = "darkblue")
       resultado=list(f_dia_depa, grafico)
       #return(f_dia_depa)
