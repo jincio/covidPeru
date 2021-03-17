@@ -534,5 +534,88 @@ casos_crecimiento<-function(data,DEPARTAMENTO=NULL, mediamovil = NA,semanal = FA
   return(resultado)
 }
 
-
-
+#' vacunados_diarios
+#'
+#' @param data Data frame creado con la función da_vacunados()
+#' @param DEPARTAMENTO Departamento del Perú. Callao está listado como departamento
+#' @param mediamovil Integer para calcular o graficar la media móvil. Eje: 1,2,3.
+#'
+#' @return
+#' @export
+#'
+#' @examples
+vacunados_diarios <- function(data,DEPARTAMENTO=NULL,mediamovil=NA){
+  if ("METODODX"%in%colnames(data)){
+    stop("La base de datos es incorrecta, use la función da_vacunados()")
+  }
+  
+  if(is.null(DEPARTAMENTO)){
+    titulo=paste0("Vacunados por dia a nivel Nacional")
+    data=data
+    
+    if (is.na(mediamovil))
+    {
+      v_dia_depa=data%>%
+        dplyr::select("fecha")%>%
+        group_by(fecha)%>%
+        summarize(count=n())
+      grafico <- v_dia_depa %>% ggplot2::ggplot(aes(x = fecha, y = count)) +
+        ggplot2::geom_bar(stat="identity")+
+        labs(y="Vacunados diarios",title = titulo)#+
+      #ggplot2::geom_line(size = 1.2,colour = "darkblue")
+      resultado=list(v_dia_depa, grafico)
+      #return(v_dia_depa)
+    }
+    else{
+      k=mediamovil
+      v_dia_depa=data%>%
+        dplyr::select("fecha")%>%
+        group_by(fecha)%>%
+        summarize(count=n()) %>%
+        mutate(media.movil = zoo::rollmean(count,k=k, fill=NA,align = "right"))
+      grafico <- v_dia_depa %>% ggplot2::ggplot(aes(x = fecha, y = media.movil)) +
+        ggplot2::geom_bar(stat="identity")+
+        labs(y="Vacunados diarios",title = titulo)+
+        ggplot2::geom_line(aes(x = fecha, y = count),size = 1.2,colour = "darkblue")
+      resultado=list(v_dia_depa, grafico)### Grafico aquí de barras con media movil?
+      #return(v_dia_depa)
+    }
+    
+  } else{
+    DEPARTAMENTO=toupper(DEPARTAMENTO)
+    titulo=paste0("Vacunados por dia en ",DEPARTAMENTO)
+    data=data
+    departamento_select=DEPARTAMENTO
+    
+    if (is.na(mediamovil))
+    {
+      v_dia_depa=data%>%filter(DEPARTAMENTO==departamento_select)%>%
+        dplyr::select("DEPARTAMENTO","fecha")%>%
+        group_by(DEPARTAMENTO,fecha)%>%
+        summarize(count=n())
+      grafico <- v_dia_depa %>% ggplot2::ggplot(aes(x = fecha, y = count)) +
+        ggplot2::geom_bar(stat="identity")+
+        labs(y="Vacunados diarios",title = titulo)#+
+      #ggplot2::geom_line(size = 1.2,colour = "darkblue")
+      
+      resultado=list(v_dia_depa, grafico)
+      #return(v_dia_depa)
+    }
+    else{
+      k=mediamovil
+      v_dia_depa=data%>%filter(DEPARTAMENTO==departamento_select)%>%
+        dplyr::select("DEPARTAMENTO","fecha")%>%
+        group_by(DEPARTAMENTO,fecha)%>%
+        summarize(count=n()) %>% ungroup() %>%
+        mutate(media.movil = zoo::rollmean(count,k=k, fill=NA,align = "right"))
+      grafico <- v_dia_depa %>% ggplot2::ggplot(aes(x = fecha, y = media.movil)) +
+        ggplot2::geom_bar(stat="identity")+
+        labs(y="Vacunados diarios",title = titulo)+
+        ggplot2::geom_line(aes(x = fecha, y = count),size = 1.2,colour = "darkblue")
+      resultado=list(v_dia_depa, grafico)
+      #return(v_dia_depa)
+    }
+    return(resultado)
+  }
+  return(resultado)
+}
