@@ -65,3 +65,23 @@ da_sinadef<-function (){
     dplyr::select(fecha,semana,year,dia,`DEPARTAMENTO DOMICILIO`,`PROVINCIA DOMICILIO`)
   return(data1)
 }
+
+
+
+#' da_vacunados
+#'
+#' @return
+#' @export
+#'
+#' @examples
+da_vacunados<-function (){
+  file = "https://cloud.minsa.gob.pe/s/ZgXoXqK2KLjRLxD/download"
+  data = data.table::fread(file,encoding="Latin-1")
+  data1= dplyr::mutate(data,year = substr(FECHA_VACUNACION,1,4),
+                       month = substr(FECHA_VACUNACION,5,6),
+                       day = substr(FECHA_VACUNACION,7,8),
+                       fecha=as.Date(paste0(year,"-",month,"-",day)),
+                       EDAD_n = as.numeric(EDAD),
+                       semana = lubridate::epiweek(fecha))
+  return( data1 )
+}
