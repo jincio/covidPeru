@@ -2,7 +2,7 @@
 % Please edit documentation in R/load_data.R
 \name{da_fallecidos}
 \alias{da_fallecidos}
-\title{load fallecidos Covid}
+\title{Load fallecidos Covid}
 \usage{
 da_fallecidos()
 }

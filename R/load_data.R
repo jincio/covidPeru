@@ -1,4 +1,4 @@
-#' load positive COVID cases
+#' Load positive COVID cases
 #'
 #' Cargal la base de datos de casos confirmados desde la página de datos abiertos
 #'
@@ -17,7 +17,7 @@ da_positivos<-function (){
                         semana = lubridate::epiweek(fecha))
   return(data1)
 }
-#' load fallecidos Covid
+#' Load fallecidos Covid
 #'
 #'Carga la base de datos de Fallecidos desde la página de datos abiertos
 #'
@@ -39,6 +39,7 @@ da_fallecidos<-function (){
 }
 
 #' da_sinadef
+#' Load death data from SINADEF
 #'
 #' @return
 #' @export
@@ -68,9 +69,12 @@ da_sinadef<-function (){
 
 
 
-#' da_vacunados
+#' Load Vaccinated people in Peru
+#'
+#' Cargal la base de datos de vacunas aplicadas desde la  página de datos abiertos
 #'
 #' @return
+#' Data.frame con la información  de "vacunados" (datos abiertos). Agregando la variable fecha y semana.
 #' @export
 #'
 #' @examples
