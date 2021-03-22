@@ -4,7 +4,7 @@
 \alias{vacunados_diarios}
 \title{vacunados_diarios}
 \usage{
-vacunados_diarios(data, DEPARTAMENTO = NULL, mediamovil = NA, semanal = FALSE)
+vacunados_diarios(data, DEPARTAMENTO = NULL, mediamovil = NA)
 }
 \arguments{
 \item{data}{Data frame creado con la función da_vacunados()}
@@ -12,8 +12,6 @@ vacunados_diarios(data, DEPARTAMENTO = NULL, mediamovil = NA, semanal = FALSE)
 \item{DEPARTAMENTO}{Departamento del Perú. Callao está listado como departamento}
 
 \item{mediamovil}{Integer para calcular o graficar la media móvil. Eje: 1,2,3.}
-
-\item{semanal}{Boleano True permite obtener la informacion en frecuencia semanal}
 }
 \value{
 

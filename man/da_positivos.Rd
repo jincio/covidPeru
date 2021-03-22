@@ -2,7 +2,7 @@
 % Please edit documentation in R/load_data.R
 \name{da_positivos}
 \alias{da_positivos}
-\title{load positive COVID cases}
+\title{Load positive COVID cases}
 \usage{
 da_positivos()
 }
