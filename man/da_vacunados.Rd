@@ -2,13 +2,13 @@
 % Please edit documentation in R/load_data.R
 \name{da_vacunados}
 \alias{da_vacunados}
-\title{load Vaccinated people in Peru}
+\title{Load Vaccinated people in Peru}
 \usage{
 da_vacunados()
 }
 \value{
-data_frame
+Data.frame con la información  de "vacunados" (datos abiertos). Agregando la variable fecha y semana.
 }
 \description{
-Cargal la base de datos de vacunas aplicadas desde la página de datos abiertos
+Cargal la base de datos de vacunas aplicadas desde la  página de datos abiertos
 }

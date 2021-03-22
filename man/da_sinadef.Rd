@@ -2,7 +2,8 @@
 % Please edit documentation in R/load_data.R
 \name{da_sinadef}
 \alias{da_sinadef}
-\title{da_sinadef}
+\title{da_sinadef
+Load death data from SINADEF}
 \usage{
 da_sinadef()
 }
@@ -11,4 +12,5 @@ da_sinadef()
 }
 \description{
 da_sinadef
+Load death data from SINADEF
 }
