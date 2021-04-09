@@ -77,6 +77,15 @@ fallecidos=da_fallecidos() # Crea un dataframe con la información de fallecidos
 ```{r fallecidos2}
 head(fallecidos)
 ```
+Cargamos el último set disponible en el portal de datos abiertos de vacunados contra COVID-19.
+
+```{r vacunados1, eval=FALSE}
+vacunados=da_vacunados() # Crea un dataframe con la información de fallecidos.
+```
+
+```{r vacunados2}
+head(vacunados)
+```
 
 Cargamos el último set de SINADEF disponible en el portal de datos abiertos. Este demora un poco más, tengan paciencia!. 
 
