@@ -50,19 +50,14 @@ da_sinadef<-function (){
   data=data.table::fread(file,encoding="Latin-1")
   cat("si lees esto es que el archivo bajo bien :)")
   cat("...limpiando el archivo")
-  espacio_columna <- which(data[,1]=="Nº")[1]
-  col_names <- data[espacio_columna,]
-  colnames(data) <- dplyr::as_tibble(t(col_names))$V1
   colnames(data)[14] <-"Year"
-  inicio <- espacio_columna+1
   cat("...Eliminamos informacion vacia")
-  data1 <- data[inicio:nrow(data),]
-  data1 <- data1 %>% dplyr::select_if(~sum(!is.na(.)) > 0)
+  data1 <- data %>% dplyr::select_if(~sum(!is.na(.)) > 0) 
   cat("...Creando variables standards")
   data1 <- data1 %>% dplyr::filter(`DEPARTAMENTO DOMICILIO` != "EXTRANJERO",
-                            `MUERTE VIOLENTA` %in% c("SIN REGISTRO","NO SE CONOCE")) %>%
+                                   `MUERTE VIOLENTA` %in% c("SIN REGISTRO","NO SE CONOCE")) %>%
     dplyr::mutate(fecha = as.Date(FECHA),semana = lubridate::epiweek(fecha), mes = as.numeric(MES),
-           year = as.numeric(Year),dia = weekdays(fecha)) %>%
+                  year = as.numeric(Year),dia = weekdays(fecha)) %>%
     dplyr::select(fecha,semana,year,dia,`DEPARTAMENTO DOMICILIO`,`PROVINCIA DOMICILIO`)
   return(data1)
 }
