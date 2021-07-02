@@ -89,6 +89,7 @@ piramide_pcovid <- function(data,DEPARTAMENTO=NULL){
   if(is.null(DEPARTAMENTO)){
 
     data.piramide = data %>%
+      filter(!SEXO=="NULL")%>%
       dplyr::mutate(EDAD_CAT = cut(EDAD,
                                    #breaks = c(0,5,10,15,20,25,30,35,40,45,50,55,60,65,70,75,80,85,90,95,100,120),
                                    breaks = seq(0,120,5),
@@ -114,6 +115,7 @@ piramide_pcovid <- function(data,DEPARTAMENTO=NULL){
 
     DEPA = toupper(DEPARTAMENTO)
     data.piramide = data %>%
+      filter(!SEXO=="NULL")%>%
       dplyr::filter(DEPARTAMENTO==DEPA) %>%
       dplyr::mutate(EDAD_CAT = cut(EDAD,
                                    #breaks = c(0,5,10,15,20,25,30,35,40,45,50,55,60,65,70,75,80,85,90,95,100,120),
